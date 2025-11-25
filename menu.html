@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korangi Mini Shop</title>
+
+
+<script>
+  if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html"; 
+  }
+</script>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Poppins',sans-serif;background:#f5f5f7;}
+header{background:#111827;color:#fff;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+header h2{margin:0;font-weight:600;}
+.cart-icon{cursor:pointer;font-size:28px;position:relative;}
+.count{background:#ef4444;color:#fff;border-radius:50%;font-size:12px;padding:3px 7px;position:absolute;top:-10px;right:-10px;}
+
+.container{max-width:1200px;margin:auto;padding:30px;}
+
+.category-section{margin-bottom:40px;}
+.category-title{font-size:24px;margin-bottom:15px;font-weight:600;color:#111827;}
+
+.product-slider-wrapper{position:relative;}
+.product-slider{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:10px;}
+
+.card{min-width:220px;background:white;padding:18px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1);border:1px solid #e5e7eb;text-align:center;transition:0.3s;}
+.card:hover{transform:translateY(-5px);}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:10px;}
+
+button.add-cart{padding:10px 15px;background:#10b981;color:white;border:none;width:100%;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;}
+button.add-cart:hover{background:#059669;}
+
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:#2563eb;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;}
+.arrow-left{left:-15px;}
+.arrow-right{right:-15px;}
+
+/* DEALS */
+.deals-wrapper{max-width:1200px;margin:10px auto 30px;display:flex;gap:20px;flex-wrap:wrap;}
+.deal-card{background:white;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.08);flex:1 1 220px;min-width:220px;position:relative;}
+.deal-card .label{position:absolute;top:12px;left:12px;background:#2563eb;color:white;padding:6px 10px;border-radius:8px;font-weight:700;font-size:12px;}
+
+.deal-card button{width:48%;padding:10px;border-radius:8px;border:none;font-weight:700;cursor:pointer;}
+.view-btn{background:#2563eb;color:white;}
+.order-btn{background:#10b981;color:white;}
+
+/* Modal */
+#dealModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);justify-content:center;align-items:center;z-index:99999;}
+.modal-box{background:white;border-radius:12px;padding:20px;max-width:520px;width:92%;}
+
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+<!-- Loader Screen -->
+<div id="siteLoader" style="
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#ffffff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction: column;
+  z-index:999999;
+">
+  <!-- GIF -->
+  <img src="./预览图_千图网_编号35441224.gif" alt="Loading..." style="width:280px; height: 300px; margin-bottom:20px;">
+  
+  <!-- Text under GIF -->
+  <div style="
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+  ">
+    Korangi Mini Shopping
+  </div>
+</div>
+
+
+
+
+<script>
+// Fixed 4-second loader
+setTimeout(function() {
+  document.getElementById("siteLoader").style.display = "none";
+}, 1000); // 4000ms = 4 seconds
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HEADER -->
+<header>
+  <h2>Korangi Mini Shop</h2>
+  <div class="cart-icon">
+    <a href="card.html" style="color:white;text-decoration:none;">🛒</a>
+    <span class="count" id="count">0</span>
+  </div>
+</header>
+
+<!-- Slider -->
+<div class="top-slider">
+  <div class="slide active"><img src="banner1.jpg"></div>
+  <div class="slide"><img src="banner2.jpg"></div>
+  <div class="slide"><img src="banner3.jpg"></div>
+</div>
+
+<style>
+.top-slider{width:100%;height:220px;overflow:hidden;position:relative;border-radius:12px;margin-bottom:30px;}
+.top-slider .slide{width:100%;height:100%;position:absolute;opacity:0;transition:1s;}
+.top-slider .slide.active{opacity:1;}
+.top-slider img{width:100%;height:100%;object-fit:cover;}
+</style>
+
+<script>
+let idx=0;
+const slides=document.querySelectorAll(".top-slider .slide");
+setInterval(()=>{
+  slides.forEach(s=>s.classList.remove("active"));
+  slides[idx].classList.add("active");
+  idx=(idx+1)%slides.length;
+},3000);
+</script>
+
+<!-- Product Container -->
+<div class="container" id="container"></div>
+
+<script>
+/* --- PRODUCTS --- */
+const categories = {
+  grocery: [
+    {name:'Sugar 1kg',price:180,img:'images/sugar.jpg'},
+    {name:'Flour 5kg',price:550,img:'images/flour.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
+    {name:'Tea 200g',price:220,img:'images/tea.jpg'}
+  ],
+  cosmetics: [
+    {name:'Fairness Cream',price:200,img:'images/fairness.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'}
+  ],
+  snacks: [
+    {name:'Chips',price:50,img:'images/chips.jpg'},
+    {name:'Chocolate',price:120,img:'images/chocolate.jpg'},
+    {name:'Cookies',price:80,img:'images/cookies.jpg'},
+    {name:'Cookies',price:80,img:'images/cookies.jpg'},
+    {name:'Cookies',price:80,img:'images/cookies.jpg'},
+    {name:'Cookies',price:80,img:'images/cookies.jpg'},
+    {name:'Cookies',price:80,img:'images/cookies.jpg'}
+  ],
+
+goodproducts: [
+    {name:'Fairness Cream',price:200,img:'images/fairness.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'}
+  ]
+};
+
+function renderCategories(){
+  const container=document.getElementById("container");
+  container.innerHTML="";
+
+  for(let cat in categories){
+    let div=document.createElement("div");
+    div.className="category-section";
+
+    div.innerHTML=`
+      <div class="category-title">${cat.toUpperCase()}</div>
+      <div class="product-slider-wrapper">
+        <button class="arrow-btn arrow-left" onclick='scrollSlider("${cat}",-300)'>&lt;</button>
+        <div class="product-slider" id="slider-${cat}"></div>
+        <button class="arrow-btn arrow-right" onclick='scrollSlider("${cat}",300)'>&gt;</button>
+      </div>
+    `;
+
+    container.appendChild(div);
+
+    let slider=document.getElementById(`slider-${cat}`);
+    categories[cat].forEach(p=>{
+      let card=document.createElement("div");
+      card.className="card";
+      card.innerHTML=`
+        <img src="${p.img}">
+        <h4>${p.name}</h4>
+        <p>Rs ${p.price}</p>
+        <button class="add-cart" onclick="addCart('${p.name}',${p.price})">Add to Cart</button>
+      `;
+      slider.appendChild(card);
+    });
+  }
+}
+
+function scrollSlider(cat,amount){
+  document.getElementById(`slider-${cat}`).scrollBy({left:amount,behavior:"smooth"});
+}
+</script>
+
+<script>
+/* --- CART --- */
+function addCart(name,price){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let f=cart.find(i=>i.name===name);
+
+  if(f) f.qty++;
+  else cart.push({name,price,qty:1});
+
+  localStorage.setItem("korangiCart",JSON.stringify(cart));
+  updateCount();
+}
+
+function updateCount(){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let total=cart.reduce((a,i)=>a+i.qty,0);
+  document.getElementById("count").innerText=total;
+}
+
+renderCategories();
+updateCount();
+</script>
+
+<!-- DEALS -->
+<div class="deals-wrapper" id="dealsWrapper"></div>
+
+<!-- Modal -->
+<div id="dealModal">
+  <div class="modal-box">
+    <h3 id="modalDealTitle"></h3>
+    <ul id="modalItemsList" style="padding-left:20px;"></ul>
+    <h3 id="modalTotal" style="margin-top:10px;"></h3>
+
+    <button onclick="closeDealModal()" style="background:#ef4444;color:white;padding:10px;border-radius:8px;width:48%;border:none;">Close</button>
+    <button onclick="orderNowFromModal()" style="background:#10b981;color:white;padding:10px;border-radius:8px;width:48%;border:none;">Order Now</button>
+  </div>
+</div>
+
+<script>
+/* --- DEAL DATA --- */
+const dealDefinitions = {
+  "Deal 1":[
+    {name:"Sugar 1kg",price:180},
+    {name:"Sugar 1kg",price:180},
+    {name:"Sugar 1kg",price:180},
+    {name:"Sugar 1kg",price:180},
+    {name:"Tea 200g",price:220}
+],
+
+  "Deal 2":[
+    {name:"Flour 5kg",price:550},
+    {name:"Flour 5kg",price:550},
+    {name:"Flour 5kg",price:550},
+    {name:"Flour 5kg",price:550},
+    {name:"Rice 1kg",price:240}
+],
+  "Deal 3":[
+    {name:"Chips",price:50},
+    {name:"Chips",price:50},
+    {name:"Chips",price:50},
+    {name:"Chocolate",price:120},
+    {name:"Chocolate",price:120},
+    {name:"Chocolate",price:120}
+],
+
+
+  "Deal 4":[
+    {name:"Chips",price:50},
+    {name:"Chips",price:50},
+    {name:"Chips",price:50},
+    {name:"Chocolate",price:120},
+    {name:"Chocolate",price:120},
+    {name:"Chocolate",price:120}
+]
+
+
+
+};
+
+/* --- RENDER DEAL CARDS WITH FIXED PRICE --- */
+const dealsWrapper=document.getElementById("dealsWrapper");
+
+for(let deal in dealDefinitions){
+
+  /* FIX: Correct total calculation */
+  let total = dealDefinitions[deal].reduce((a,b)=>a + Number(b.price),0);
+
+  let card=document.createElement("div");
+  card.className="deal-card";
+
+  card.innerHTML=`
+    <div class="label">DEAL</div>
+    <h3>${deal}</h3>
+    <p style="font-weight:700;color:#111;">Rs ${total}</p>
+    <p class="small">Tap View to see items</p>
+
+    <div style="display:flex;gap:8px;">
+      <button class="view-btn" onclick="openDealModal('${deal}')">View</button>
+      <button class="order-btn" onclick="addDealToCart('${deal}',${total})">Add to Cart</button>
+    </div>
+  `;
+
+  dealsWrapper.appendChild(card);
+}
+
+let currentDeal=null;
+
+function openDealModal(deal){
+  currentDeal=deal;
+  document.getElementById("modalDealTitle").innerText=deal;
+
+  let ul=document.getElementById("modalItemsList");
+  ul.innerHTML="";
+
+  let total=0;
+  dealDefinitions[deal].forEach(i=>{
+    ul.innerHTML+=`<li>${i.name} — Rs ${i.price}</li>`;
+    total+=i.price;
+  });
+
+  document.getElementById("modalTotal").innerText="Total: Rs "+total ;
+  document.getElementById("dealModal").style.display="flex";
+}
+
+function closeDealModal(){
+  document.getElementById("dealModal").style.display="none";
+}
+
+/* ADD DEAL TO CART */
+function addDealToCart(dealName,total){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let f=cart.find(i=>i.name===dealName);
+
+  if(f) f.qty++;
+  else cart.push({name:dealName,price:total,qty:1});
+
+  localStorage.setItem("korangiCart",JSON.stringify(cart));
+  updateCount();
+}
+
+/* ORDER NOW */
+function orderNowFromModal(){
+  let total=dealDefinitions[currentDeal].reduce((a,b)=>a+Number(b.price),0);
+  addDealToCart(currentDeal,total);
+  closeDealModal();
+}
+</script>
+
+<!-- FOOTER -->
+<footer style="background:#111827;color:white;padding:30px;text-align:center;margin-top:50px;">
+  <h2>Korangi Mini Shop</h2>
+  <p>Fast Local Delivery | Grocery | Cosmetics | Snacks</p>
+  <p style="opacity:0.6;">© 2025 Korangi Mini Shop</p>
+</footer>
+
+
+
+<script src="importantcode.js"></script>
+</body>
+</html>

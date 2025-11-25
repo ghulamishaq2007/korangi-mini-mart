@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korangi Mini Shop</title>
+
+<script>
+  if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html"; 
+  }
+</script>
+
+<!-- SEO -->
+<meta name="title" content="Korangi Mini Shop - Local Delivery">
+<meta name="description" content="Online grocery, snacks, cosmetics, and kitchen items with fast local delivery in Korangi.">
+<meta name="keywords" content="Korangi shop, Korangi delivery, Korangi grocery, online store Korangi, mini shop Korangi, local delivery Karachi">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.khan{
+width: 100%;
+max-width: 500px;
+height: auto;
+}
+.ishaqdar{
+flex-direction: column;
+gap: 20px;
+}
+@media (min-width: 768px){
+.ishaqdar{
+flex-direction: row;
+}
+}
+.product-card img{
+height: 150px;
+object-fit: cover;
+}
+/* SweetAlert Custom Buttons */
+.delete-btn {
+  background-color: #dc2626; 
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  margin: 5px;
+  font-weight: bold;
+}
+.delete-btn:hover {
+  background-color: #b91c1c;
+}
+.cancel-btn {
+  background-color: #6b7280; 
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  margin: 5px;
+  font-weight: bold;
+}
+.cancel-btn:hover {
+  background-color: #4b5563;
+}
+/* Alert Box Smooth Style */
+.alert-popup {
+  border-radius: 14px !important;
+  padding-bottom: 20px !important;
+}
+</style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<header class="bg-blue-900 text-white p-4 flex justify-between items-center shadow">
+  <h1 class="text-xl font-bold"> <a href="./menu.html">Korangi Mini Shop</a></h1>
+  <a href="#checkout" class="relative">
+    <span class="text-2xl">🛒</span>
+    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs">0</span>
+  </a>
+</header>
+
+<main class="max-w-6xl mx-auto p-4">
+  <!-- Categories -->   
+  <section>
+    <h2 class="text-2xl font-bold mb-3">Categories</h2>
+    <div class="flex gap-3 flex-wrap mb-6">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('grocery')">Grocery</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('cosmetics')">Cosmetics</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('snacks')">Snacks</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('kitchen')">Kitchen Items</button>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></section>
+
+  <!-- Checkout -->
+  <section id="checkout" class="mt-10">
+    <h2 class="text-2xl font-bold mb-3">Checkout</h2>
+    <div class="ishaqdar">
+      <div class="khan">
+        <h2 class="text-2xl font-bold mb-3">IMPORTANT NOTICES</h2>
+        <p>
+          you odder resive in 24 hour so please waite and i will contact on whatapp in few hour so wriet you whatapp number not call number  
+        </p>
+      </div>
+      <div class="bg-white p-6 rounded shadow space-y-4">
+        <div id="cartItems" class="space-y-3"></div>
+        <div class="flex justify-between font-bold text-lg">
+          <span>Total:</span>
+          <span id="totalAmount">Rs 0</span>
+        </div>
+
+        <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="f8e9f093-d189-40ae-9ce8-2a645395bba4">
+          <input type="hidden" name="order_items" id="order_items">
+          <input type="hidden" name="order_total" id="order_total">
+
+          <input type="text" name="name" id="name" placeholder="Full Name" required class="w-full p-2 border border-gray-300 rounded">
+          <input type="email" name="email" id="email" placeholder="Email" required class="w-full p-2 border border-gray-300 rounded">
+          <input type="text" name="whatsapp" id="whatsapp" placeholder="WhatsApp Number" required class="w-full p-2 border border-gray-300 rounded">
+          <input type="text" name="address" id="address" placeholder="Full Address" required class="w-full p-2 border border-gray-300 rounded">
+          <textarea name="notes" id="notes" placeholder="Notes (optional)" class="w-full p-2 border border-gray-300 rounded"></textarea>
+
+          <button type="button" id="orderBtn" class="w-full bg-green-600 text-white p-2 rounded hover:bg-green-800">
+            ORDER NOW
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded shadow max-w-md text-center space-y-4">
+    <div id="modalMessage"></div>
+    <button id="closeModal" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">OK</button>
+  </div>
+</div>
+
+<script>
+const productsData = {
+  grocery:[{name:'Sugar 1kg',price:180},{name:'Flour 5kg',price:550},{name:'Rice 1kg',price:240},{name:'Tea 200g',price:220},{name:'Salt Pack',price:50}],
+  cosmetics:[{name:'Fairness Cream',price:200},{name:'Hair Oil',price:150},{name:'Shampoo',price:260},{name:'Face Wash',price:180},{name:'Perfume Small',price:300}],
+  snacks:[{name:'Chips',price:50},{name:'Biscuits',price:40},{name:'Chocolate',price:120},{name:'Juice Pack',price:80},{name:'Cake Rusk',price:100}],
+  kitchen:[{name:'Plate Set',price:300},{name:'Glass Set',price:250},{name:'Knife',price:120},{name:'Spoon Set',price:100},{name:'Fry Pan',price:650}]
+};
+
+let cart = JSON.parse(localStorage.getItem('korangiCart')||'[]');
+updateCartUI();
+
+function showCategory(cat){
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+  productsData[cat].forEach(p=>{
+    const card = document.createElement('div');
+    card.className = "bg-white p-4 rounded shadow flex flex-col justify-between";
+    card.innerHTML = `
+      <img src="https://via.placeholder.com/200x150" class="rounded mb-2">
+      <h3 class="font-bold text-lg">${p.name}</h3>
+      <p class="mb-2">Rs ${p.price}</p>
+      <button class="bg-green-600 text-white p-2 rounded hover:bg-green-800" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function addToCart(name, price){
+  let existing = cart.find(i=>i.name===name);
+  if(existing){ existing.qty++; } else { cart.push({name, price, qty:1}); }
+  localStorage.setItem('korangiCart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+function removeFromCart(name){
+  cart = cart.filter(i=>i.name!==name);
+  localStorage.setItem('korangiCart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+function updateCartUI(){
+  const cartContainer = document.getElementById('cartItems');
+  cartContainer.innerHTML = '';
+  let total = 0;
+  cart.forEach(i=>{
+    const div = document.createElement('div');
+    div.className = "flex justify-between items-center bg-gray-50 p-2 rounded";
+    div.innerHTML = `<span>${i.qty} x ${i.name} - Rs ${i.price*i.qty}</span>
+                     <button class="bg-red-500 text-white px-2 rounded" onclick="removeFromCart('${i.name}')">Delete</button>`;
+    cartContainer.appendChild(div);
+    total += i.price*i.qty;
+  });
+  document.getElementById('totalAmount').innerText = 'Rs '+total;
+  document.getElementById('cartCount').innerText = cart.reduce((a,b)=>a+b.qty,0);
+  document.getElementById('order_items').value = cart.map(i=>i.qty+' x '+i.name+' - Rs '+(i.price*i.qty)).join('\n');
+  document.getElementById('order_total').value = total;
+}
+
+function showModal(msg){
+  const modal = document.getElementById('modal');
+  document.getElementById('modalMessage').innerText = msg;
+  modal.classList.remove('hidden');
+}
+document.getElementById('closeModal').onclick = ()=>{document.getElementById('modal').classList.add('hidden');};
+
+// ORDER BUTTON WITH FULL VALIDATION AND RED HIGHLIGHT
+document.getElementById('orderBtn').addEventListener('click', ()=>{
+  if(cart.length === 0){
+      showModal("Cart is empty!");
+      return;
+  }
+
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const whatsappField = document.getElementById("whatsapp");
+  const addressField = document.getElementById("address");
+
+  const name = nameField.value.trim();
+  const email = emailField.value.trim();
+  const whatsapp = whatsappField.value.trim();
+  const address = addressField.value.trim();
+
+  // Reset all borders
+  [nameField, emailField, whatsappField, addressField].forEach(f => f.style.borderColor="#d1d5db");
+
+  if(!name){
+      nameField.style.borderColor = "red";
+      showModal("Please enter your name");
+      return;
+  }
+
+  if(!/^[^@]+@gmail\.com$/.test(email)){
+      emailField.style.borderColor = "red";
+      showModal("Please enter a valid Gmail address (e.g., example@gmail.com)");
+      return;
+  }
+
+  if(!/^03\d{9}$/.test(whatsapp)){
+      whatsappField.style.borderColor = "red";
+      showModal("Please enter a valid WhatsApp number starting with 03 and 11 digits long");
+      return;
+  }
+
+  if(!address){
+      addressField.style.borderColor = "red";
+      showModal("Please enter your address");
+      return;
+  }
+
+  const dealItems = cart.filter(i => i.name.toLowerCase().includes("deal"));
+  const normalItems = cart.filter(i => !i.name.toLowerCase().includes("deal"));
+  const totalNormalQty = normalItems.reduce((sum,i)=>sum+i.qty,0);
+
+  if(dealItems.length === 0 && totalNormalQty < 5){
+      showModal("Sir please select at least 5 items in total or choose at least one deal. ");
+      return;
+  }
+
+  document.getElementById("checkoutForm").submit();
+  localStorage.removeItem("korangiCart");
+  cart = [];
+  updateCartUI();
+  sweetmesage("🎉 Order Sent Successfully! YOU WILL RESIVE IN 24 HOURS");
+});
+</script>
+<script src="importantcode.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="card.js"></script>
+
+</body>
+</html>

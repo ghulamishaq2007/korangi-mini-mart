@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      width: 380px;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      border: none;
+      color: #fff;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    button:hover { opacity: 0.8; }
+    .signup-btn { background: #10b981; }
+    .login-btn { background: #4f46e5; }
+    .google-btn { background: #db4437; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>Login / Signup</h2>
+
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+
+    <button class="login-btn" onclick="login()">Login</button>
+    <button class="signup-btn" onclick="signup()">Signup</button>
+    <button class="google-btn" onclick="googleLogin()">Login with Google</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDOmvdnVQpj2iSTnHgWpWZFEPxXdAOO6SA",
+      authDomain: "korangiminishop.firebaseapp.com",
+      projectId: "korangiminishop",
+      storageBucket: "korangiminishop.firebasestorage.app",
+      messagingSenderId: "455099459942",
+      appId: "1:455099459942:web:dde7c032c606df71ecc0a7",
+      measurementId: "G-Y7F7CW373B"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function success(msg) {
+      Swal.fire({
+        icon: "success",
+        title: msg,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+
+    function error(msg) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: msg,
+        confirmButtonColor: "#e11d48"
+      });
+    }
+
+    // SIGNUP
+    window.signup = () => {
+      const email = document.getElementById("email").value;
+      const pass  = document.getElementById("password").value;
+
+      createUserWithEmailAndPassword(auth, email, pass)
+      .then(() => {
+
+        // ✅ USER LOGIN FLAG
+        localStorage.setItem("loggedIn", "yes");
+
+        success("Signup Successful!");
+        setTimeout(() => { window.location.href = "menu.html"; }, 1500);
+      })
+      .catch(err => {
+
+        if (err.code === "auth/email-already-in-use") {
+          error("This email is already registered!");
+        }
+        else if (err.code === "auth/weak-password") {
+          error("Password must be at least 6 characters!");
+        }
+        else {
+          error("Something went wrong! Try again.");
+        }
+
+      });
+    }
+
+    // LOGIN
+    window.login = () => {
+      const email = document.getElementById("email").value;
+      const pass  = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, pass)
+      .then(() => {
+
+        // ✅ USER LOGIN FLAG
+        localStorage.setItem("loggedIn", "yes");
+
+        success("Login Successful!");
+        setTimeout(() => { window.location.href = "menu.html"; }, 1500);
+      })
+      .catch(err => {
+
+        if (err.code === "auth/wrong-password") {
+          error("Your password is not correct!");
+        }
+        else if (err.code === "auth/user-not-found") {
+          error("No account found with this email!");
+        }
+        else if (err.code === "auth/invalid-credential") {
+          error("Incorrect email or password!");
+        }
+        else {
+          error("Something went wrong! Try again.");
+        }
+
+      });
+    }
+
+    // GOOGLE LOGIN
+    window.googleLogin = () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+      .then(() => {
+
+        // ✅ USER LOGIN FLAG
+        localStorage.setItem("loggedIn", "yes");
+
+        success("Google Login Successful!");
+        setTimeout(() => { window.location.href = "menu.html"; }, 1500);
+      })
+      .catch(() => {
+        error("Google login failed! Try again.");
+      });
+    }
+
+  </script>
+
+
+<script src="importantcode.js"></script>
+
+</body>
+</html>
