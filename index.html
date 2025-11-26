@@ -257,8 +257,26 @@ auth.onAuthStateChanged(user => {
   if(user){user.reload().catch(()=>{localStorage.removeItem("loggedIn");auth.signOut();window.location.href="login.html";});}
   else{localStorage.removeItem("loggedIn");}
 });
+
+
+
+  
+  // ------------------ AUTH STATE CHECK ------------------
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Reload user to check if account deleted
+        user.reload().catch(() => {
+          localStorage.removeItem("loggedIn");
+          auth.signOut();
+          window.location.href = "login.html";
+        });
+      } else {
+        localStorage.removeItem("loggedIn");
+      }
+    });
 </script>
 <script src="importantcode.js"></script>
 
 </body>
 </html>
+
