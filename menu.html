@@ -3,7 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korangi Mini Shop</title>
+<title>Korangi Mini Mart - Fast Local Delivery </title>
+<meta name="description" content="Korangi Mini Mart - Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="keywords" content="Korangi Mini Mart, Korangi grocery delivery, Korangi snacks online, Korangi cosmetics, Korangi kitchen items, online grocery Karachi, fast delivery Korangi, local mini mart, Korangi shopping, buy groceries online Korangi, Korangi online store, Korangi mini shop, same day delivery Korangi, Korangi food delivery, Karachi mini mart, Korangi local delivery, Korangi household items, Korangi essentials, Korangi shopping online, online mart Korangi">
+<link rel="icon" href="favicon.png" type="image/png">
+<meta property="og:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta property="og:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta property="og:url" content="https://korangiminimart.netlify.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta name="twitter:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://korangiminimart.netlify.app/">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart">
+<meta name="twitter:description" content="Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="twitter:image" content="https://korangiminimart.com/images/social-preview.png">
+<meta name="twitter:site" content="@KorangiMiniMart"> <!-- Optional: Your Twitter handle -->
+
 
 
 <script>
@@ -25,13 +46,10 @@ header h2{margin:0;font-weight:600;}
 
 .container{max-width:1200px;margin:auto;padding:30px;}
 
-.category-section{margin-bottom:40px;}
-.category-title{font-size:24px;margin-bottom:15px;font-weight:600;color:#111827;}
 
 
 
-
-  .product-slider {
+.product-slider {
     scrollbar-width: none;  /* Firefox */
 }
 
@@ -39,6 +57,9 @@ header h2{margin:0;font-weight:600;}
     display: none;  /* Chrome, Edge, Safari */
 }
 
+
+.category-section{margin-bottom:40px;}
+.category-title{font-size:24px;margin-bottom:15px;font-weight:600;color:#111827;}
 
 .product-slider-wrapper{position:relative;}
 .product-slider{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:10px;}
@@ -50,7 +71,7 @@ header h2{margin:0;font-weight:600;}
 button.add-cart{padding:10px 15px;background:#10b981;color:white;border:none;width:100%;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;}
 button.add-cart:hover{background:#059669;}
 
-.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:#2563eb;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;z-index:999;}
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:#2563eb;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer; z-index:999;}
 .arrow-left{left:-15px;}
 .arrow-right{right:-15px;}
 
@@ -169,37 +190,48 @@ setInterval(()=>{
 /* --- PRODUCTS --- */
 const categories = {
   grocery: [
-    {name:'Sugar 1kg',price:180,img:'images/sugar.jpg'},
-    {name:'Flour 5kg',price:550,img:'images/flour.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Rice 1kg',price:240,img:'images/rice.jpg'},
-    {name:'Tea 200g',price:220,img:'images/tea.jpg'}
+    {name:'Larg Blue Band',price:180,img:'blue-band-butter-medium.png'},
+    {name:'Small Blue Band',price:550,img:'blue-band-butter-small.png'},
+    {name:'Small Milk Pak',price:240,img:'milk-pack-small.png'},
+    {name:'Large Milk Pak',price:220,img:'large-milkpak-box.png'},
+    {name:'Milk Pak Creem',price:240,img:'milk-pack-cream.png'},
+    {name:'Olper Creem',price:240,img:'olper-cream-.png'},
+    {name:'Large Olper Milk',price:240,img:'olper-milk-small.png'},
+    {name:'Small Olper Milk',price:240,img:'small-olper-milk.png'},
+    {name:'6 Egg',price:240,img:'6-egg.png'},
+    {name:'Apple Jam ',price:240,img:'jam-apple.png'},
+    {name:'Apple Jam',price:220,img:'apple-jam-small.png'},
+    {name:'Mix Fruit Jam',price:220,img:'mix-fruit-jam-large.png'},
+    {name:'Mix Fruit Jam',price:220,img:'mix-fruit-jam-small.png'}
   ],
   cosmetics: [
-    {name:'Fairness Cream',price:200,img:'images/fairness.jpg'},
-    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'},
-    {name:'Shampoo',price:260,img:'images/shampoo.jpg'}
+    {name:'DanayDar Small',price:200,img:'tea-pack-danay-dar-small.png'},
+    {name:'DanayDar large',price:150,img:'tea-pack-danedar-big.png'},
+    {name:'Family Mixture Small',price:260,img:'tea-box-family-mixture-small.png'},
+    {name:'Family Mixture Big',price:260,img:'tea-pack-family-mixture-big.png'},
+    {name:'Mazban Small',price:260,img:'tea-box-mazban-small.png'},
+    {name:'Mazban Big',price:260,img:'tea-pack-mazan-big.png'},
+    {name:'Lemon Green Tea',price:260,img:'lemon-green-tea.png'},
+    {name:'Apple Green Tea',price:260,img:'apple-green-tea.png'}
   ],
   snacks: [
-    {name:'Chips',price:50,img:'images/chips.jpg'},
-    {name:'Chocolate',price:120,img:'images/chocolate.jpg'},
-    {name:'Cookies',price:80,img:'images/cookies.jpg'},
-    {name:'Cookies',price:80,img:'images/cookies.jpg'},
-    {name:'Cookies',price:80,img:'images/cookies.jpg'},
-    {name:'Cookies',price:80,img:'images/cookies.jpg'},
-    {name:'Cookies',price:80,img:'images/cookies.jpg'}
+    {name:'Dal Chana',price:50,img:'dal-chana.png'},
+    {name:'Dal Mash',price:120,img:'dal-mash.png'},
+    {name:'Dal Masoor',price:80,img:'dal-masoor.png'},
+    {name:'Dal Moong',price:80,img:'dal-moong.png'}
   ],
 
 goodproducts: [
+    {name:'Fairness Cream',price:200,img:'images/fairness.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
+    {name:'Shampoo',price:260,img:'images/shampoo.jpg'}
+  ],
+  hi: [
     {name:'Fairness Cream',price:200,img:'images/fairness.jpg'},
     {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
     {name:'Hair Oil',price:150,img:'images/hair_oil.jpg'},
@@ -293,8 +325,8 @@ updateCount();
 const dealDefinitions = {
   "Deal 1":[
     {name:"Sugar 1kg",price:180},
-    {name:"Sugar 1kg",price:180},
-    {name:"Sugar 1kg",price:180},
+    {name:"Rice 1kg",price:50},
+    {name:"dal 1kg",price:180},
     {name:"Sugar 1kg",price:180},
     {name:"Tea 200g",price:220}
 ],
@@ -408,8 +440,6 @@ function orderNowFromModal(){
 
 
 <script src="importantcode.js"></script>
+
 </body>
 </html>
-
-
-
