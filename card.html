@@ -302,7 +302,7 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
   if(!addressField.value.trim()){ addressField.style.borderColor="red"; showModal("Please enter your address"); return; }
 
   if(!locationField.value.trim()){
-    showModal("Your Oder Come 24 Hour Are You Agree Press OK", ()=>{
+    showModal("Please Allow Your Location ", ()=>{
 
       getUserLocation((granted,status)=>{
         if(granted){
@@ -345,4 +345,5 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
 
 </body>
 </html>
+
 
