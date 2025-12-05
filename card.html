@@ -409,7 +409,7 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
   const totalNormalQty = normalItems.reduce((sum,i)=>sum+i.qty,0);
 
   if(dealItems.length===0 && totalNormalQty<7){ 
-    showModal("Please select at least 7 items in total or at least one deal."); 
+    showModal("Please select at least 7 items in total."); 
     return; 
   }
 
@@ -428,3 +428,4 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
 
 </body>
 </html>
+
