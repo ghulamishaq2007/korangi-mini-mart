@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login / Signup</title>
+<meta name="description" content="Korangi Mini Mart - Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="keywords" content="Korangi Mini Mart, Korangi grocery delivery, Korangi snacks online, Korangi cosmetics, Korangi kitchen items, online grocery Karachi, fast delivery Korangi, local mini mart, Korangi shopping, buy groceries online Korangi, Korangi online store, Korangi mini shop, same day delivery Korangi, Korangi food delivery, Karachi mini mart, Korangi local delivery, Korangi household items, Korangi essentials, Korangi shopping online, online mart Korangi">
+
+  <link rel="icon" href="./Artboard 1.png" type="image/png">
+
+
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg,#4f46e5,#9333ea);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 10px;
+  }
+
+  .form-container {
+    width: 380px;
+    max-width: 100%;
+    border-radius:.75rem;
+    background-color:rgba(17,24,39,1);
+    padding:2rem;
+    color: #f3f4f6;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    box-sizing: border-box;
+  }
+
+  .title {
+    text-align:center;
+    font-size:1.5rem;
+    line-height:2rem;
+    font-weight:700;
+  }
+
+  .form {
+    margin-top:1.5rem;
+    width:100%;
+  }
+
+  .input-group {
+    margin-top:.25rem;
+    font-size:.875rem;
+    line-height:1.25rem;
+  }
+
+  .input-group label {
+    display:block;
+    color: #9ca3af;
+    margin-bottom:4px;
+  }
+
+  .input-group input {
+    width:100%;
+    border-radius:.375rem;
+    border:1px solid #374151;
+    outline:0;
+    background-color: #111827;
+    padding:.75rem 1rem;
+    color:#f3f4f6;
+    box-sizing:border-box;
+  }
+
+  .input-group input:focus {
+    border-color:#a78bfa;
+  }
+
+  .forgot {
+    display:flex;
+    justify-content:flex-end;
+    font-size:.75rem;
+    line-height:1rem;
+    color:#9ca3af;
+    margin:8px 0 14px 0;
+  }
+
+  .forgot a,.signup a {
+    color:#f3f4f6;
+    text-decoration:none;
+    font-size:14px;
+  }
+
+  .forgot a:hover,.signup a:hover {
+    text-decoration:underline #a78bfa;
+  }
+
+  .sign {
+    display:block;
+    width:100%;
+    background-color:#a78bfa;
+    padding:.75rem;
+    text-align:center;
+    color:#111827;
+    border:none;
+    border-radius:.375rem;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:15px;
+  }
+
+  .social-message {
+    display:flex;
+    align-items:center;
+    padding-top:1rem;
+    width:100%;
+  }
+
+  .line {
+    height:1px;
+    flex:1;
+    background-color:#374151;
+  }
+
+  .social-message .message {
+    padding:0 .75rem;
+    font-size:.875rem;
+    line-height:1.25rem;
+    color:#9ca3af;
+  }
+
+  .social-icons {
+    display:flex;
+    justify-content:center;
+    margin-top:.5rem;
+    gap:10px;
+  }
+
+  .social-icons .icon {
+    border-radius:.125rem;
+    padding:.75rem;
+    border:none;
+    background-color:transparent;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .social-icons .icon svg {
+    height:1.5rem;
+    width:1.5rem;
+    fill:#fff;
+  }
+
+  .signup {
+    text-align:center;
+    font-size:.75rem;
+    line-height:1rem;
+    color:#9ca3af;
+    margin-top:1.5rem;
+  }
+
+  /* ====== Responsive ====== */
+  @media (max-width: 500px) {
+    .form-container {
+      padding: 1.5rem;
+    }
+
+    .title {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+
+    .sign {
+      padding: .6rem;
+      font-size: 0.9rem;
+    }
+
+    .input-group input {
+      padding: .6rem .8rem;
+    }
+
+    .social-icons .icon {
+      padding: .6rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <p class="title">Login</p>
+  <form class="form" onsubmit="return false">
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+      <!-- <div class="forgot"><a href="#">Forgot Password?</a></div> -->
+    </div>
+    <button class="sign" onclick="login()">Login</button>
+    <button class="sign" style="margin-top:10px; background-color:#10b981;" onclick="signup()">Signup</button>
+  </form>
+
+  <div class="social-message">
+    <div class="line"></div>
+    <p class="message">Login with social accounts</p>
+    <div class="line"></div>
+  </div>
+
+  <div class="social-icons">
+    <!-- Google -->
+    <button class="icon" aria-label="Log in with Google" onclick="googleLogin()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"/></svg>
+    </button>
+  </div>
+
+
+
+
+  
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDOmvdnVQpj2iSTnHgWpWZFEPxXdAOO6SA",
+  authDomain: "korangiminishop.firebaseapp.com",
+  projectId: "korangiminishop",
+  storageBucket: "korangiminishop.appspot.com",
+  messagingSenderId: "455099459942",
+  appId: "1:455099459942:web:dde7c032c606df71ecc0a7",
+  measurementId: "G-Y7F7CW373B"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+function success(msg){Swal.fire({icon:"success",title:msg,showConfirmButton:false,timer:1500});}
+function error(msg){Swal.fire({icon:"error",title:"Error",text:msg,confirmButtonColor:"#e11d48"});}
+
+window.signup = () => {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+  createUserWithEmailAndPassword(auth,email,pass)
+  .then(()=>{localStorage.setItem("loggedIn","yes");success("Signup Successful!");setTimeout(()=>{window.location.href="menu.html";},1500);})
+  .catch(err=>{if(err.code==="auth/email-already-in-use") error("This email is already registered!"); else if(err.code==="auth/weak-password") error("Password must be at least 6 characters!"); else error("Your password is not correct. ");});
+};
+
+window.login = () => {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+  signInWithEmailAndPassword(auth,email,pass)
+  .then(()=>{localStorage.setItem("loggedIn","yes");success("Login Successful!");setTimeout(()=>{window.location.href="menu.html";},1500);})
+  .catch(err=>{if(err.code==="auth/wrong-password") error("Your password is not correct!"); else if(err.code==="auth/user-not-found") error("No account found with this email!"); else error("Your password is not correct. ");});
+};
+
+window.googleLogin = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth,provider)
+  .then(result=>{localStorage.setItem("loggedIn","yes");success("Google Login Successful!");setTimeout(()=>{window.location.href="menu.html";},1500);})
+  .catch(()=>{error("Google login failed! Try again.");});
+};
+
+auth.onAuthStateChanged(user => {
+  if(user){user.reload().catch(()=>{localStorage.removeItem("loggedIn");auth.signOut();window.location.href="login.html";});}
+  else{localStorage.removeItem("loggedIn");}
+});
+
+  // ------------------ AUTH STATE CHECK ------------------
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Reload user to check if account deleted
+        user.reload().catch(() => {
+          localStorage.removeItem("loggedIn");
+          auth.signOut();
+          window.location.href = "login.html";
+        });
+      } else {
+        localStorage.removeItem("loggedIn");
+      }
+    });
+</script>
+<script src="importantcode.js"></script>
+
+
+
+<script>
+function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      // Save email in localStorage for account.html
+      localStorage.setItem("loginEmail", email);
+      localStorage.setItem("loggedIn", "yes");
+
+      Swal.fire({icon:"success",title:"Login Successful!",showConfirmButton:false,timer:1500});
+      setTimeout(() => { window.location.href = "account.html"; }, 1500);
+    })
+    .catch((err) => { Swal.fire({icon:"error",title:"Login Failed!",text:"Check your credentials"}); });
+}
+</script>
+
+
+<script src="importantcode.js"></script>
+
+</body>
+</html>

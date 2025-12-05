@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korangi Mini Mart - Fast Local Delivery </title>
+<meta name="description" content="Korangi Mini Mart - Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="keywords" content="Korangi Mini Mart, Korangi grocery delivery, Korangi snacks online, Korangi cosmetics, Korangi kitchen items, online grocery Karachi, fast delivery Korangi, local mini mart, Korangi shopping, buy groceries online Korangi, Korangi online store, Korangi mini shop, same day delivery Korangi, Korangi food delivery, Karachi mini mart, Korangi local delivery, Korangi household items, Korangi essentials, Korangi shopping online, online mart Korangi">
+<link rel="icon" href="./Artboard 1.png" type="image/png">
+<meta property="og:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta property="og:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta property="og:url" content="https://korangiminimart.netlify.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta name="twitter:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://korangiminimart.netlify.app/">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart">
+<meta name="twitter:description" content="Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="twitter:image" content="https://korangiminimart.com/images/social-preview.png">
+<meta name="twitter:site" content="@KorangiMiniMart">
+
+
+<script>
+  if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html"; 
+  }
+</script>
+
+<meta name="title" content="Korangi Mini Shop - Local Delivery">
+<meta name="description" content="Online grocery, snacks, cosmetics, and kitchen items with fast local delivery in Korangi.">
+<meta name="keywords" content="Korangi shop, Korangi delivery, Korangi grocery, online store Korangi, mini shop Korangi, local delivery Karachi">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+  var firebaseConfig = {
+     apiKey: "AIzaSyDOmvdnVQpj2iSTnHgWpWZFEPxXdAOO6SA",
+     authDomain: "korangiminishop.firebaseapp.com",
+     projectId: "korangiminishop",
+     storageBucket: "korangiminishop.appspot.com",
+     messagingSenderId: "455099459942",
+     appId: "1:455099459942:web:dde7c032c606df71ecc0a7",
+     measurementId: "G-Y7F7CW373B"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<style>
+  .container-footer a,
+.container-footer a:visited {
+    color: #fff;
+}
+
+.container-footer a:hover {
+    color: #ccc;
+}
+/* HEADER */
+header{
+  background:#111827;
+  color:#fff;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+header h2{margin:0;font-weight:600;font-size:22px;}
+.cart-icon{position:relative;font-size:28px;}
+.count{
+  background:#ef4444;color:white;border-radius:50%;
+  padding:3px 7px;font-size:12px;position:absolute;top:-10px;right:-10px;
+}
+.ishaqdar{ flex-direction: column; gap: 20px; }
+@media (min-width: 768px){ .ishaqdar{ flex-direction: row; } }
+/* .product-card img{ height: 150px; object-fit: cover; } */
+.delete-btn { background-color: #dc2626; color: white; padding: 8px 20px; border-radius: 6px; margin: 5px; font-weight: bold; }
+.delete-btn:hover { background-color: #b91c1c; }
+.cancel-btn { background-color: #6b7280; color: white; padding: 8px 20px; border-radius: 6px; margin: 5px; font-weight: bold; }
+.cancel-btn:hover { background-color: #4b5563; }
+.alert-popup { border-radius: 14px !important; padding-bottom: 20px !important; }
+.arrange{ display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+.arrange1{ width:300px; box-shadow: black 0px 2px 6px; margin-right: 20px; border-radius: 8px; margin-bottom: 20px; padding: 20px; flex: 1 1 300px; background: #ffffff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+@media (max-width: 600px) { .arrange1 { flex: 1 1 100%; } }
+p{ font-size: larger; font-family: sans-serif; }
+footer{background:#070707;padding:40px 20px;margin-top:50px;border-top:1px solid #ddd}
+footer .container-footer{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px}
+footer h3{margin-bottom:15px;font-size:18px;font-weight:600 ;color:#fafcff}
+footer p,footer ul{font-size:14px;line-height:22px ;color:#fafcff}
+footer ul{list-style:none;padding:0;line-height:26px ;color:#fafcff}
+</style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<header>
+  <a href="./menu.html">
+<img src="./Artboard 1.png" width="80" height="80"></a>
+  <h2>Korangi Mini Shop</h2>
+  <div class="cart-icon">
+     <!-- User Icon (White Color) -->
+    <!-- <a href="account.html" class="user-icon">👤</a> -->
+    <a href="card.html" style="color:white;text-decoration:none;">🛒</a>
+<span class="count" id="cartCount">0</span>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto p-4">
+  <div class="arrange">
+    <div class="arrange1">
+      <h2 class="text-2xl font-bold mb-3">IMPORTANT NOTICES</h2> 
+      <p>Your order will be received in 24 hours. Please wait; I will contact on WhatsApp. Write your WhatsApp number, not call number.</p>
+    </div>
+    <div class="arrange1">
+      <h2 class="text-2xl font-bold mb-3">Select 5 items</h2> 
+      <p>If you have not selected at least 5 items, your order cannot be processed. Please select 5 items.</p>
+    </div>
+  </div>
+
+  <!-- <section>
+    <h2 class="text-2xl font-bold mb-3">Categories</h2>
+    <div class="flex gap-3 flex-wrap mb-6">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('grocery')">Grocery</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('cosmetics')">Cosmetics</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('snacks')">Snacks</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800" onclick="showCategory('kitchen')">Kitchen Items</button>
+    </div>
+  </section> -->
+
+  <!-- <section id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></section> -->
+
+  <section id="checkout" class="mt-10">
+    <h2 class="text-2xl font-bold mb-3">Checkout</h2>
+    <div class="ishaqdar">
+      <div class="bg-white p-6 rounded shadow space-y-4">
+
+        <div id="cartItems" class="space-y-3"></div>
+
+        <div class="flex justify-between font-bold text-lg">
+          <span>Total:</span>
+          <span id="totalAmount">Rs 0</span>
+        </div>
+
+        <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="f8e9f093-d189-40ae-9ce8-2a645395bba4">
+          <input type="hidden" name="order_items" id="order_items">
+          <input type="hidden" name="order_total" id="order_total">
+
+          <input type="text" name="name" id="name" placeholder="Full Name" required class="w-full p-2 border border-gray-300 rounded">
+          <input type="email" id="email" name="email" placeholder="Email" required class="w-full p-2 border border-gray-300 rounded" readonly>
+          <input type="text" name="whatsapp" id="whatsapp" placeholder="WhatsApp Number" required class="w-full p-2 border border-gray-300 rounded">
+          <input type="text" name="address" id="address" placeholder="Full Address" required class="w-full p-2 border border-gray-300 rounded">
+
+          <input type="hidden" name="location" id="location" required>
+
+          <textarea name="notes" id="notes" placeholder="Notes (optional)" class="w-full p-2 border border-gray-300 rounded"></textarea>
+
+          <button type="button" id="orderBtn" class="w-full bg-green-600 text-white p-2 rounded hover:bg-green-800">
+            ORDER NOW
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+<footer>
+<div class="container-footer">
+<div>
+<h3>Korangi Mini Mart</h3>
+<p>Your trusted local online store delivering fresh groceries, household items, cosmetics, and more—fast and affordable.</p>
+</div>
+  <!-- <div>
+    <h3>Customer Service</h3>
+    <ul>
+      <li>Help Center</li>
+      <li>Order Tracking</li>
+      <li>Returns & Refunds</li>
+      <li>Shipping Information</li>
+    </ul>
+  </div> -->
+<div>
+<h3>Quick Links</h3>
+<ul>
+      <li> <a href="about.html">About Us</a></li>
+<li> <a href="./contact.html">Contact</a></li>
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+
+<li>Terms & Conditions</li>
+</ul>
+</div>
+<div>
+<h3>Follow Us</h3>
+<ul>
+   <li>
+ <a 
+      href="https://www.facebook.com/sharer/sharer.php?u=https://korangiminimart.netlify.app" 
+      target="_blank">
+      Facebook share
+    </a>
+      </li>
+
+      <li>
+        <a href="https://wa.me/?text=https://korangiminimart.netlify.app" target="_blank">
+          Share on WhatsApp
+        </a>
+      </li>
+</ul>
+</div>
+</div>
+<div style="text-align:center;margin-top:30px;font-size:13px;color:#555;">
+© 2025 Korangi Mini Mart — All Rights Reserved.
+</div>
+</footer>
+
+<!-- 🔥 LOCATION BLOCKED MODAL (VIDEO + ALERT + OK BUTTON) -->
+<div id="locationBlockedModal" 
+     class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center hidden z-50">
+  <div class="bg-white p-4 rounded-lg shadow-xl max-w-sm w-11/12 text-center">
+
+    <video src="Korangi Mini Mart - Fast Local Delivery.mp4" 
+           class="w-full rounded mb-3" 
+           autoplay loop controls></video>
+
+    <p class="text-red-600 font-bold text-lg mb-4">
+      🔴 Location blocked from browser.<br>
+      Please open browser settings & allow location.
+    </p>
+
+    <button id="locationBlockedOK" 
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 w-full">
+      OK
+    </button>
+
+  </div>
+</div>
+
+
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded shadow max-w-md text-center space-y-4">
+    <div id="modalMessage"></div>
+    <button id="closeModal" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800">OK</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    document.getElementById("email").value = user.email;
+  } else {
+    window.location.href = "index.html";
+  }
+});
+
+// const productsData = {
+//   grocery:[{name:'Sugar 1kg',price:180},{name:'Flour 5kg',price:550},{name:'Rice 1kg',price:240},{name:'Tea 200g',price:220},{name:'Salt Pack',price:50}],
+//   cosmetics:[{name:'Fairness Cream',price:200},{name:'Hair Oil',price:150},{name:'Shampoo',price:260},{name:'Face Wash',price:180},{name:'Perfume Small',price:300}],
+//   snacks:[{name:'Chips',price:50},{name:'Biscuits',price:40},{name:'Chocolate',price:120},{name:'Juice Pack',price:80},{name:'Cake Rusk',price:100}],
+//   kitchen:[{name:'Plate Set',price:300},{name:'Glass Set',price:250},{name:'Knife',price:120},{name:'Spoon Set',price:100},{name:'Fry Pan',price:650}]
+// };
+
+let cart = JSON.parse(localStorage.getItem('korangiCart')||'[]');
+updateCartUI();
+
+
+function showCategory(cat){ 
+  const container = document.getElementById('products'); 
+  container.innerHTML=''; 
+  productsData[cat].forEach(p=>{
+    const card=document.createElement('div'); 
+    card.className="bg-white p-4 rounded shadow flex flex-col justify-between"; 
+    card.innerHTML=`<img src="https://via.placeholder.com/200x150" class="rounded mb-2">
+                    <h3 class="font-bold text-lg">${p.name}</h3>
+                    <p class="mb-2">Rs ${p.price}</p>
+                    <button class="bg-green-600 text-white p-2 rounded hover:bg-green-800" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>`; 
+    container.appendChild(card); 
+  }); 
+}
+
+function addToCart(name, price){ 
+  let existing=cart.find(i=>i.name===name); 
+  if(existing){ existing.qty++; }
+  else{ cart.push({name, price, qty:1}); } 
+  localStorage.setItem('korangiCart',JSON.stringify(cart)); 
+  updateCartUI(); 
+}
+
+function removeFromCart(name){ 
+  cart=cart.filter(i=>i.name!==name); 
+  localStorage.setItem('korangiCart',JSON.stringify(cart)); 
+  updateCartUI(); 
+}
+
+function updateCartUI(){ 
+  const cartContainer=document.getElementById('cartItems'); 
+  cartContainer.innerHTML=''; 
+  let total=0; 
+  cart.forEach(i=>{ 
+    const div=document.createElement('div'); 
+    div.className="flex justify-between items-center bg-gray-50 p-2 rounded"; 
+    div.innerHTML=`<span>${i.qty} x ${i.name} - Rs ${i.price*i.qty}</span>
+                   <button class="bg-red-500 text-white px-2 rounded" onclick="removeFromCart('${i.name}')">Delete</button>`; 
+    cartContainer.appendChild(div); 
+    total+=i.price*i.qty; 
+  }); 
+  document.getElementById('totalAmount').innerText='Rs '+total; 
+  document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0); 
+  document.getElementById('order_items').value=cart.map(i=>i.qty+' x '+i.name+' - Rs '+(i.price*i.qty)).join('\n'); 
+  document.getElementById('order_total').value=total; 
+}
+
+document.getElementById('closeModal').onclick = ()=>{
+  document.getElementById('modal').classList.add('hidden');
+};
+
+function showModal(msg, callback){
+  const modal = document.getElementById('modal');
+  document.getElementById('modalMessage').innerText = msg;
+  modal.classList.remove('hidden');
+  document.getElementById('closeModal').onclick = ()=>{
+    modal.classList.add('hidden');
+    if(callback) callback();
+  };
+}
+
+
+// ⭐ GET USER LOCATION
+function getUserLocation(callback){
+  if(!navigator.geolocation){ 
+    callback(false,"not_supported"); 
+    return; 
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      document.getElementById("location").value = url;
+      callback(true);
+    },
+    err => {
+      if(err.code===1){ callback(false,"blocked"); }
+      else{ callback(false,"error"); }
+    }
+  );
+}
+
+
+// ⭐ LOCATION BLOCKED POPUP BUTTON
+document.getElementById("locationBlockedOK").addEventListener("click", function(){
+    document.getElementById("locationBlockedModal").classList.add("hidden");
+});
+
+
+// ⭐ ORDER BUTTON CLICK
+document.getElementById('orderBtn').addEventListener('click', ()=>{
+
+  if(cart.length===0){ showModal("Ap Nay Kuch Nahi Liya !"); return; }
+
+  const nameField=document.getElementById("name");
+  const emailField=document.getElementById("email");
+  const whatsappField=document.getElementById("whatsapp");
+  const addressField=document.getElementById("address");
+  const locationField=document.getElementById("location");
+
+  [nameField,emailField,whatsappField,addressField,locationField].forEach(f=>f.style.borderColor="#d1d5db");
+
+  if(!nameField.value.trim()){ nameField.style.borderColor="red"; showModal("Please enter your name"); return; }
+  if(!/^[^@]+@gmail\.com$/.test(emailField.value.trim())){ emailField.style.borderColor="red"; showModal("Please enter a valid Gmail address"); return; }
+  if(!/^03\d{9}$/.test(whatsappField.value.trim())){ whatsappField.style.borderColor="red"; showModal("Please enter a valid WhatsApp number"); return; }
+  if(!addressField.value.trim()){ addressField.style.borderColor="red"; showModal("Please enter your address"); return; }
+
+  if(!locationField.value.trim()){
+    showModal("Please Allow Your Location ", ()=>{
+
+      getUserLocation((granted,status)=>{
+        if(granted){
+          document.getElementById('orderBtn').click();
+        } 
+        else {
+          if(status==="blocked"){
+            document.getElementById("locationBlockedModal").classList.remove("hidden");
+          }
+          else{
+            Swal.fire("🔴 Unable to get location. Please try again.");
+          }
+        }
+      });
+
+    });
+    return;
+  }
+
+  const dealItems = cart.filter(i=>i.name.toLowerCase().includes("deal"));
+  const normalItems = cart.filter(i=>!i.name.toLowerCase().includes("deal"));
+  const totalNormalQty = normalItems.reduce((sum,i)=>sum+i.qty,0);
+
+  if(dealItems.length===0 && totalNormalQty<7){ 
+    showModal("Please select at least 7 items in total or at least one deal."); 
+    return; 
+  }
+
+  document.getElementById("checkoutForm").submit();
+  localStorage.removeItem("korangiCart");
+  cart=[];
+  updateCartUI();
+  Swal.fire("🎉 Order Sent Successfully! YOU WILL RECEIVE IN 24 HOURS");
+
+});
+</script>
+
+<script src="importantcode.js"></script>
+<script src="card.js" ></script>
+
+
+</body>
+</html>

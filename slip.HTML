@@ -1,0 +1,181 @@
+<!-- Enhanced Premium Invoice Generator with Full QR and PDF Styling -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Invoice Slip Generator</title>
+  <style>
+    body { font-family: Arial,sans-serif; background:#f3f4f6; margin:0; padding:20px; display:flex; justify-content:center; }
+    .container { display:flex; gap:20px; width:100%; max-width:1200px; }
+    .form-section { width:35%; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .invoice-section { width:65%; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); position:relative; }
+    input, textarea { width:100%; padding:10px; margin-bottom:12px; border-radius:8px; border:1px solid #ccc; }
+    button { width:100%; padding:12px; border:none; border-radius:8px; background:#2563eb; color:#fff; cursor:pointer; font-size:16px; margin-bottom:8px; }
+    .invoice-box { padding:20px; border:2px solid #000; width:100%; background:#fff; border-radius:12px; }
+    .header { text-align:center; margin-bottom:20px; }
+    .logo { width:80px; height:80px; background:#ddd; margin:0 auto 10px; border-radius:50%; }
+    table { width:100%; border-collapse:collapse; margin-top:20px; }
+    th, td { border:1px solid #000; padding:8px; font-size:14px; text-align:center; }
+    #qr { width:100px; height:100px; margin-top:10px; }
+    .remove-btn { background:#ef4444; color:white; padding:6px 12px; border:none; border-radius:6px; cursor:pointer; }
+    #subtotalBox, #totalBox { font-weight:600; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-section">
+    <h2>Fill Invoice Details</h2>
+    <label>Company Name</label>
+    <input id="company" placeholder="Your Company Name" />
+    <label>Customer Name</label>
+    <input id="cname" placeholder="Customer Name" />
+    <label>Customer Phone</label>
+    <input id="cphone" placeholder="Phone Number" />
+    <label>Customer Address</label>
+    <textarea id="caddress" placeholder="Full Address"></textarea>
+
+    <h3>Order Items</h3>
+    <table id="itemsTable">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="itemBody">
+        <tr>
+          <td><input type="text" class="pname" style="width:100%;padding:6px;"></td>
+          <td><input type="number" class="qty" value="1" min="1" style="width:80px;padding:6px;" oninput="updateRowTotal(this)"></td>
+          <td><input type="number" class="price" value="0" min="0" style="width:100px;padding:6px;" oninput="updateRowTotal(this)"></td>
+          <td class="rowTotal">0</td>
+          <td><button onclick="removeRow(this)" class="remove-btn">X</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button onclick="addRow()">+ Add Product</button>
+
+    <label>Tax (%)</label>
+    <input type="number" id="tax" value="0" oninput="calcTotals()">
+    <label>Discount</label>
+    <input type="number" id="discount" value="0" oninput="calcTotals()">
+
+    <button onclick="generateInvoice()">Generate & Preview Slip</button>
+    <button onclick="downloadPDF()" style="background:#16a34a">Download PDF</button>
+  </div>
+
+  <div class="invoice-section">
+    <div id="invoice" class="invoice-box">
+      <div class="header">
+        <div class="logo"></div>
+        <h2 id="inv-company">Company Name</h2>
+        <p id="inv-date"></p>
+        <canvas id="qr"></canvas>
+      </div>
+      <h3>Customer Details</h3>
+      <p><strong>Name:</strong> <span id="inv-cname"></span></p>
+      <p><strong>Phone:</strong> <span id="inv-cphone"></span></p>
+      <p><strong>Address:</strong> <span id="inv-caddress"></span></p>
+
+      <h3>Order Items</h3>
+      <table id="product-table">
+        <thead>
+          <tr>
+            <th>Item</th><th>Qty</th><th>Price</th><th>Total</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p><strong>Subtotal:</strong> <span id="subtotalBox">0</span></p>
+      <p><strong>Total:</strong> <span id="totalBox">0</span></p>
+      <div id="paidBadge" style="position:absolute;top:20px;right:20px;padding:10px 20px;background:#10b981;color:white;border-radius:8px;font-weight:600;display:none;">PAID</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function addRow(){
+  let body = document.getElementById('itemBody');
+  let tr = document.createElement('tr');
+  tr.innerHTML = `<td><input type='text' class='pname' style='width:100%;padding:6px;'></td>
+                  <td><input type='number' class='qty' value='1' min='1' style='width:80px;padding:6px;' oninput='updateRowTotal(this)'></td>
+                  <td><input type='number' class='price' value='0' min='0' style='width:100px;padding:6px;' oninput='updateRowTotal(this)'></td>
+                  <td class='rowTotal'>0</td>
+                  <td><button onclick='removeRow(this)' class='remove-btn'>X</button></td>`;
+  body.appendChild(tr);
+}
+
+function removeRow(btn){ btn.parentElement.parentElement.remove(); calcTotals(); }
+
+function updateRowTotal(elem){
+  let tr = elem.parentElement.parentElement;
+  let qty = Number(tr.querySelector('.qty').value||0);
+  let price = Number(tr.querySelector('.price').value||0);
+  tr.querySelector('.rowTotal').innerText = qty * price;
+  calcTotals();
+}
+
+function calcTotals(){
+  let rows = document.querySelectorAll('#itemBody tr');
+  let subtotal = 0;
+  rows.forEach(r=>{ let qty=Number(r.querySelector('.qty').value||0); let price=Number(r.querySelector('.price').value||0); subtotal+=qty*price; });
+  let tax=Number(document.getElementById('tax').value||0);
+  let discount=Number(document.getElementById('discount').value||0);
+  let total = subtotal + (subtotal*tax/100) - discount;
+  document.getElementById('subtotalBox').innerText=subtotal;
+  document.getElementById('totalBox').innerText=total;
+}
+
+function generateInvoice(){
+  let cname=document.getElementById('cname').value;
+  let cphone=document.getElementById('cphone').value;
+  let caddress=document.getElementById('caddress').value;
+  let company=document.getElementById('company').value;
+  document.getElementById('inv-company').innerText = company;
+  document.getElementById('inv-cname').innerText = cname;
+  document.getElementById('inv-cphone').innerText = cphone;
+  document.getElementById('inv-caddress').innerText = caddress;
+  let date = new Date();
+  document.getElementById('inv-date').innerText = date.toLocaleString();
+
+  let qrValue = `Company: ${company}\nCustomer: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}\nDate: ${date.toLocaleString()}`;
+  let qr = new QRious({ element: document.getElementById('qr'), value: qrValue, size:120 });
+
+  let tbody = document.querySelector('#product-table tbody');
+  tbody.innerHTML = '';
+  document.querySelectorAll('#itemBody tr').forEach(r=>{
+    let name = r.querySelector('.pname').value;
+    let qty = r.querySelector('.qty').value;
+    let price = r.querySelector('.price').value;
+    let total = qty*price;
+    tbody.innerHTML += `<tr><td>${name}</td><td>${qty}</td><td>${price}</td><td>${total}</td></tr>`;
+  });
+}
+
+async function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit:'pt', format:'a4' });
+  await html2canvas(document.querySelector('#invoice'), { scale:2 }).then(canvas=>{
+    const img=canvas.toDataURL('image/png');
+    pdf.addImage(img,'PNG',20,20,555,0);
+  });
+  pdf.save('invoice-slip.pdf');
+}
+
+function markPaid(state){
+  const badge=document.getElementById('paidBadge');
+  if(state){ badge.style.display='block'; badge.innerText='PAID'; badge.style.background='#10b981';}
+  else { badge.style.display='block'; badge.innerText='UNPAID'; badge.style.background='#ef4444';}
+}
+</script>
+<script src="importantcode.js"></script>
+
+</body>
+</html>

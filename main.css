@@ -1,0 +1,168 @@
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:#f5f5f7;}
+
+/* HEADER */
+header{
+  background:#111827;
+  color:#fff;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+header h2{margin:0;font-weight:600;font-size:22px;}
+.cart-icon{position:relative;font-size:28px;}
+.count{
+  background:#ef4444;color:white;border-radius:50%;
+  padding:3px 7px;font-size:12px;position:absolute;top:-10px;right:-10px;
+}
+
+/* CATEGORY BUTTONS SCROLLABLE */
+.category-buttons-wrapper{
+  display:flex; overflow-x:auto; gap:10px;
+  padding:10px 20px; background:#f3f4f6;
+  scrollbar-width:none;
+}
+
+.container-footer a,
+.container-footer a:visited {
+    color: #fff;
+}
+
+.container-footer a:hover {
+    color: #ccc;
+}
+
+
+.category-buttons-wrapper::-webkit-scrollbar{display:none;}
+.category-btn{
+  flex:0 0 auto;
+  padding:8px 16px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.category-btn.active{background:#10b981;}
+
+/* SLIDERS */
+.top-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.top-slider .slide {
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.top-slider .slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+.top-slider img {
+    width: 100%;
+    height: auto;       /* responsive */
+    object-fit: cover;
+    display: block;
+}
+/* PRODUCT SLIDER */
+
+.container{max-width:1200px;margin:auto;padding:20px;}
+.category-title{font-size:22px;font-weight:600;margin-bottom:12px;color:#111827;}
+.product-slider-wrapper{position:relative;margin-bottom:30px;}
+.product-slider{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:10px;}
+.product-slider::-webkit-scrollbar{display:none;}
+.card{min-width:200px;background:white;padding:15px;border-radius:14px;box-shadow:0 4px 15px rgba(0,0,0,0.1);text-align:center;}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:12px;margin-bottom:10px;}
+.add-cart{background:#10b981;color:white;border:none;padding:10px;width:100%;border-radius:8px;font-weight:600;cursor:pointer;}
+.arrow-btn{position:absolute;top:50%;transform:translateY(-50%);background:#2563eb;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer; z-index:999;}
+.arrow-left{left:-15px;}
+.arrow-right{right:-15px;}
+
+/* DEALS */
+.deals-wrapper{max-width:1200px;margin:20px auto;display:flex;flex-wrap:wrap;gap:20px;}
+.deal-card{background:white;padding:18px;border-radius:12px;box-shadow:0 5px 18px rgba(0,0,0,0.08);flex:1 1 240px;min-width:240px;}
+.deal-card .label{background:#2563eb;color:white;padding:5px 8px;border-radius:6px;font-size:12px;font-weight:600;margin-bottom:10px;display:inline-block;}
+.view-btn, .order-btn{padding:10px;width:48%;border-radius:8px;border:none;font-weight:700;cursor:pointer;}
+.view-btn{background:#2563eb;color:white;}
+.order-btn{background:#10b981;color:white;}
+
+
+
+
+
+
+
+/* card img zoom start */
+.card img {
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:10px;
+  transition: transform 0.3s ease;   /* new */
+  transform-origin: center center;   /* new */
+}
+
+.card:hover img,
+.card:active img {                   /* new */
+  z-index: 10;
+}
+/* card img zoom end */
+
+
+
+
+
+/* MODAL */
+#dealModal{display:none;position:fixed;top:0; left:0;width:100%; height:100%; background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:9999;}
+.modal-box{background:white;width:90%;max-width:420px;padding:20px;border-radius:12px;}
+
+/* FOOTER */
+footer{background:#070707;padding:40px 20px;margin-top:50px;border-top:1px solid #ddd}
+footer .container-footer{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px}
+footer h3{margin-bottom:15px;font-size:18px;font-weight:600 ;color:#fafcff}
+footer p,footer ul{font-size:14px;line-height:22px ;color:#fafcff}
+footer ul{list-style:none;padding:0;line-height:26px ;color:#fafcff}
+
+
+.card a {
+  text-decoration: none;  /* underline remove */
+  color: inherit;         /* text ka color inherit kare card se */
+  display: block;         /* poora card cover kar sake */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* User Icon */
+.user-icon {
+  font-size: 28px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.user-icon:hover {
+  transform: scale(1.15);
+}

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ur" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tullo Oil 1kg - Korangi Mini Mart | Fast 24-Hour Delivery</title>
+
+<!-- Meta Title -->
+<meta name="title" content="Tullo Oil 1kg - Korangi Mini Mart | Fast 24-Hour Delivery">
+
+<!-- Meta Description -->
+<meta name="description" content="Buy Tullo Oil 1kg online from Korangi Mini Mart. Fresh, high-quality cooking oil delivered to your doorstep within 24 hours. Free delivery anywhere in Korangi. Order anytime, 24/7!">
+
+<!-- Meta Keywords -->
+<meta name="keywords" content="Tullo Oil 1kg, buy Tullo Oil Korangi, cooking oil delivery Korangi, Korangi Mini Mart oil, groceries online Korangi, 24 hour delivery Korangi, cooking oil online Karachi, daily essentials Korangi">
+
+<!-- Favicon -->
+<link rel="icon" href="./Artboard 1.png" type="image/png">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:title" content="Tullo Oil 1kg - Korangi Mini Mart">
+<meta property="og:description" content="Order Tullo Oil 1kg online in Korangi. Delivered fresh within 24 hours with free delivery. Available 24/7.">
+<meta property="og:url" content="https://korangiminimart.netlify.app/tullo-oil-1kg">
+<meta property="og:type" content="product">
+<meta property="og:image" content="https://korangiminimart.com/images/tullo-oil-1kg.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tullo Oil 1kg - Korangi Mini Mart">
+<meta name="twitter:description" content="Fresh Tullo Oil 1kg delivered within 24 hours in Korangi. Free delivery & 24/7 ordering.">
+<meta name="twitter:image" content="https://korangiminimart.com/images/tullo-oil-1kg.png">
+<meta name="twitter:site" content="@KorangiMiniMart">
+
+<!-- Canonical & Robots -->
+<link rel="canonical" href="https://korangiminimart.netlify.app/tullo-oil-1kg">
+<meta name="robots" content="index, follow">
+
+
+
+
+<link rel="stylesheet" href="product.css">
+
+<script>
+  if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html"; 
+  }
+</script>
+
+
+<style>
+  #variants {
+    display: none !important;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="./menu.html">
+<img src="./Artboard 1.png" width="80" height="80"></a>
+  <h2>Korangi Mini Shop</h2>
+  <div class="cart-icon">
+     <!-- User Icon (White Color) -->
+    <!-- <a href="account.html" class="user-icon">👤</a> -->
+    <a href="card.html" style="color:white;text-decoration:none;">🛒</a>
+    <span class="count" id="count">0</span>
+  </div>
+</header>
+
+<div class="container">
+
+
+<div class="card">
+<div class="gallery">
+  <div class="zoom-container">
+    <img id="mainImage" src="tullo-1-liter.png" alt="Product"></div>
+    <div class="thumbs" id="thumbs">
+    <div class="thumb active"><img src="tullo-1-liter.png" data-large="tullo-1-liter.png"></div>
+    <div class="thumb"><img src="tullo-1-liter.png" data-large="tullo-1-liter.png"></div>
+  </div>
+</div>
+  <div class="details">
+
+    <div class="title">Tullo Oil 1kg</div>
+    <div class="subtitle">Brand: Tullo • Available: 40 daily</div>
+
+    <div class="price-row">
+      <div class="price">Rs 480</div>
+      <div class="old-price">Rs 550</div>
+    </div>
+
+    <div class="meta">Free delivery • 7-day returns</div>
+
+    <div style="margin-top:12px">
+      <div class="variants" id="variants">
+        <div class="variant active" data-val="1kg">1kg</div>
+      </div>
+    </div>
+
+    <div class="qty-row">
+      <div style="font-weight:700">Quantity</div>
+      <div style="flex:1"></div>
+      <div class="qty">
+        <button id="dec">−</button>
+        <input id="qty" type="number" value="1" min="1">
+        <button id="inc">+</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn buy">Buy Now</button>
+      <button class="btn cart">Add to Cart</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab-buttons">
+        <div class="tab-btn active" data-tab="desc">Description</div>
+        <div class="tab-btn" data-tab="specs">Specifications</div>
+        <div class="tab-btn" data-tab="reviews">Reviews (4)</div>
+      </div>
+
+      <div class="tab-content" id="tabContent">
+
+        <div data-content="desc">
+          Tullo Oil 1kg is premium-quality cooking oil, perfect for daily cooking, frying, and healthy meals. Delivered fresh within 24 hours in Korangi for safe and high-quality use.
+        </div>
+
+        <div data-content="specs" style="display:none">
+          Volume: 1kg • Type: Refined Vegetable Oil • Brand: Tullo • Shelf life: 12 months • Ideal for cooking, frying, and daily use
+        </div>
+
+        <div data-content="reviews" style="display:none">
+          "Fresh and high-quality — 5 stars" — Ali<br>
+          "Perfect for daily cooking — 5 stars" — Sara<br>
+          "Fast delivery and good product — 5 stars" — Bilal<br>
+          "Highly recommend Tullo Oil — 5 stars" — Fatima
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+const zoomImg = document.getElementById("mainImage");
+const zoomContainer = document.querySelector(".zoom-container");
+const thumbs = document.querySelectorAll(".thumb img");
+
+// Thumbnail click to change main image
+thumbs.forEach(thumb => {
+  thumb.addEventListener("click", () => {
+    zoomImg.src = thumb.dataset.large;
+    thumbs.forEach(t => t.parentElement.classList.remove("active"));
+    thumb.parentElement.classList.add("active");
+  });
+});
+
+// Zoom effect
+zoomContainer.addEventListener("mousemove", (e) => {
+  const rect = zoomContainer.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const xPercent = (x / rect.width) * 100;
+  const yPercent = (y / rect.height) * 100;
+
+  zoomImg.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+  zoomImg.style.transform = "scale(2)";  // zoom factor
+});
+
+zoomContainer.addEventListener("mouseleave", () => {
+  zoomImg.style.transform = "scale(1)";
+  zoomImg.style.transformOrigin = "center center";
+});
+</script>
+
+
+
+
+
+  <div class="extra-sections">
+    <h3>Related Products</h3>
+    <div class="related">
+<div class="rel-card">
+  <a href="dalda-oil-1-liter.html" class="rel-card">
+    <img src="dalda-oil-1-liter.png" alt="Dalda Oil 1liter">
+    <div style="font-weight:600;">Dalda Oil 1liter</div>
+    <div style="color:#e53935;font-weight:700;">Rs 520</div>
+  </a>
+</div>
+
+<div class="rel-card">
+  <a href="tullo-ghee-1-kg.html" class="rel-card">
+    <img src="tullo-ghee-1-kg.png" alt="Tullo Ghee 1kg">
+    <div style="font-weight:600;">Tullo Ghee 1kg</div>
+    <div style="color:#e53935;font-weight:700;">Rs 680</div>
+  </a>
+</div>
+
+<div class="rel-card">
+  <a href="tullo-1-liter.html" class="rel-card">
+    <img src="tullo-1-liter.png" alt="Tullo Oil 1kg">
+    <div style="font-weight:600;">Tullo Oil 1kg</div>
+    <div style="color:#e53935;font-weight:700;">Rs 480</div>
+  </a>
+</div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Customer Reviews Section -->
+<div class="container extra-sections" style="margin-top:50px">
+  <h3>Customer Reviews</h3>
+  <div class="related">
+     <div class="rel-card">
+      <img src="./costumer1.png" alt="User 2">
+      <div style="font-weight:600;">Ali Khan</div>
+      <div>"Fast delivery and good quality. Highly recommended."</div>
+      <div style="color:#e53935;font-weight:700;">⭐⭐⭐⭐</div>
+    </div>
+    <div class="rel-card">
+      <img src="./costumer2.png" alt="User 1">
+      <div style="font-weight:600;">Sara </div>
+      <div>"Excellent product! Very satisfied with the purchase."</div>
+      <div style="color:#e53935;font-weight:700;">⭐⭐⭐⭐⭐</div>
+    </div>
+   
+    <div class="rel-card">
+      <img src="./costumer3.png" alt="User 3">
+      <div style="font-weight:600;">Hamza Ali</div>
+      <div>"Loved the design and performance. Worth the price."</div>
+      <div style="color:#e53935;font-weight:700;">⭐⭐⭐⭐⭐</div>
+    </div>
+    <div class="rel-card">
+      <img src="./costumer4.png" alt="User 4">
+      <div style="font-weight:600;">Abdulallah</div>
+      <div>"Good packaging, product as described."</div>
+      <div style="color:#e53935;font-weight:700;">⭐⭐⭐⭐</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQs Section -->
+<div class="container extra-sections" style="margin-top:50px">
+    <h3>Frequently Asked Questions</h3>
+
+    <div class="faq">
+
+        <div class="faq-item">
+            <div class="faq-question">1. What is your delivery time?</div>
+            <div class="faq-answer" style="display:none">
+                We deliver all orders within 24 hours anywhere inside our service area.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">2. When can I place my order?</div>
+            <div class="faq-answer" style="display:none">
+                You can place your order anytime — 24 hours, 7 days a week. There are no time restrictions.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">3. Is delivery free?</div>
+            <div class="faq-answer" style="display:none">
+                Yes, delivery is completely free on all orders. No hidden charges.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">4. Can I track my order?</div>
+            <div class="faq-answer" style="display:none">
+                Order tracking is not available. As soon as your order is ready for dispatch, our rider will directly reach your location.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">5. How will I receive my order?</div>
+            <div class="faq-answer" style="display:none">
+                Once your order is prepared, our rider will come to your provided address and hand over the order directly.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">6. Do you offer returns or replacement?</div>
+            <div class="faq-answer" style="display:none">
+                Yes, if you receive a wrong or damaged item, you can request a replacement within 24 hours.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+<div class="container-footer">
+<div>
+<h3>Korangi Mini Mart</h3>
+<p>Your trusted local online store delivering fresh groceries, household items, cosmetics, and more—fast and affordable.</p>
+</div>
+  <!-- <div>
+    <h3>Customer Service</h3>
+    <ul>
+      <li>Help Center</li>
+      <li>Order Tracking</li>
+      <li>Returns & Refunds</li>
+      <li>Shipping Information</li>
+    </ul>
+  </div> -->
+<div>
+<h3>Quick Links</h3>
+<ul>
+      <li> <a href="about.html">About Us</a></li>
+<li> <a href="./contact.html">Contact</a></li>
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+
+<li>Terms & Conditions</li>
+</ul>
+</div>
+<div>
+<h3>Follow Us</h3>
+<ul>
+   <li>
+ <a 
+      href="https://www.facebook.com/sharer/sharer.php?u=https://korangiminimart.netlify.app/tullo-oil-1kg" 
+      target="_blank">
+      Facebook share
+    </a>
+      </li>
+
+      <li>
+        <a href="https://wa.me/?text=https://korangiminimart.netlify.app/tullo-oil-1kg" target="_blank">
+          Share on WhatsApp
+        </a>
+      </li>
+</ul>
+</div>
+</div>
+<div style="text-align:center;margin-top:30px;font-size:13px;color:#555;">
+© 2025 Korangi Mini Mart — All Rights Reserved.
+</div>
+</footer>
+
+
+
+
+<script>
+// FAQ toggle
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    item.classList.toggle('active');
+    const ans = item.querySelector('.faq-answer');
+    if(ans.style.display==='block'){ans.style.display='none';}
+    else{ans.style.display='block'}
+  });
+});
+</script>
+
+
+<script>
+// BUY NOW
+document.querySelector('.btn.buy').addEventListener('click', () => {
+    let cart = JSON.parse(localStorage.getItem('korangiCart') || '[]');
+    let existing = cart.find(i => i.name === product.name);
+
+    if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+
+    localStorage.setItem('korangiCart', JSON.stringify(cart));
+    window.location.href = "card.html";
+});
+</script>
+
+
+<script>
+// Thumbnail click
+const mainImage = document.getElementById('mainImage');
+document.querySelectorAll('#thumbs .thumb img').forEach(img=>{
+  img.addEventListener('click',()=>{
+    mainImage.src = img.dataset.large || img.src;
+    document.querySelectorAll('#thumbs .thumb').forEach(t=>t.classList.remove('active'));
+    img.parentElement.classList.add('active');
+  });
+});
+
+// Variant selection
+document.getElementById('variants').addEventListener('click', e=>{
+  const v = e.target.closest('.variant'); if(!v) return;
+  document.querySelectorAll('#variants .variant').forEach(el=>el.classList.remove('active'));
+  v.classList.add('active');
+});
+
+// Quantity buttons
+document.getElementById('inc').addEventListener('click',()=>document.getElementById('qty').stepUp());
+document.getElementById('dec').addEventListener('click',()=>document.getElementById('qty').stepDown());
+
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('[data-content]').forEach(c=>{
+      c.style.display = (c.dataset.content===tab)?'block':'none';
+    });
+  });
+});
+
+// Cart
+const product = {name: "Tullo Oil 1kg", price: 480};
+document.querySelector('.btn.cart').addEventListener('click',()=>{
+  let cart = JSON.parse(localStorage.getItem('korangiCart')||'[]');
+  let existing = cart.find(i=>i.name===product.name);
+  if(existing){existing.qty=(existing.qty||1)+1;}
+  else{cart.push({...product, qty:1});}
+  localStorage.setItem('korangiCart',JSON.stringify(cart));
+  document.getElementById('count').innerText=cart.reduce((a,b)=>a+b.qty,0);
+  alert('Product added to cart!');
+});
+document.getElementById('count').innerText = JSON.parse(localStorage.getItem('korangiCart')||'[]').reduce((a,b)=>a+b.qty,0);
+</script>
+
+<script src="importantcode.js"></script>
+
+</body>
+</html>

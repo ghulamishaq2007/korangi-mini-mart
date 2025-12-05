@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korangi Mini Mart - Fast Local Delivery </title>
+<meta name="description" content="Korangi Mini Mart - Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="keywords" content="Korangi Mini Mart, Korangi grocery delivery, Korangi snacks online, Korangi cosmetics, Korangi kitchen items, online grocery Karachi, fast delivery Korangi, local mini mart, Korangi shopping, buy groceries online Korangi, Korangi online store, Korangi mini shop, same day delivery Korangi, Korangi food delivery, Karachi mini mart, Korangi local delivery, Korangi household items, Korangi essentials, Korangi shopping online, online mart Korangi">
+<link rel="icon" href="./Artboard 1.png" type="image/png">
+<meta property="og:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta property="og:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta property="og:url" content="https://korangiminimart.netlify.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart - Fast Local Delivery">
+<meta name="twitter:description" content="Order items online in Korangi, Karachi. Delivery within 24 hours.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://korangiminimart.netlify.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Korangi Mini Mart">
+<meta name="twitter:description" content="Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
+<meta name="twitter:image" content="https://korangiminimart.com/images/social-preview.png">
+<meta name="twitter:site" content="@KorangiMiniMart"> <!-- Optional: Your Twitter handle -->
+<script>
+  if (!localStorage.getItem("loggedIn")) {
+      window.location.href = "index.html"; 
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<!-- Loader Screen -->
+<div id="siteLoader" style="position: fixed;top:0; left:0;width:100%; height:100%; background:#ffffff; display:flex; justify-content:center; align-items:center; flex-direction: column; z-index:999999;">
+<img loading="lazy" src="./预览图_千图网_编号35441224.gif" width="280" height="300" alt="Loading...">
+  <div style="font-family: Arial, sans-serif;font-size: 24px;font-weight: bold;color: #333;text-align: center;">Korangi Mini Shopping</div>
+</div>
+
+<script>
+setTimeout(function(){document.getElementById("siteLoader").style.display="none";},2000);
+</script>
+
+<script>
+let played = false;
+
+function playWelcome() {
+    if (played) return;
+    played = true;
+
+    setTimeout(() => {
+        let msg = new SpeechSynthesisUtterance(
+            "Welcome to Korangi Mini Shop. Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours."
+        );
+
+        let voices = speechSynthesis.getVoices();
+
+        // ===== FEMALE VOICE FILTER =====
+        let femaleVoices = voices.filter(v =>
+            v.name.toLowerCase().includes("female") ||
+            v.name.toLowerCase().includes("woman") ||
+            v.name.toLowerCase().includes("zira") ||       // Microsoft Zira - female
+            v.name.toLowerCase().includes("sara") ||       // Sara - female
+            v.name.toLowerCase().includes("luna") ||
+            v.name.toLowerCase().includes("natasha") ||
+            v.name.toLowerCase().includes("leslie") ||
+            v.lang.includes("hi") ||                       // Hindi female voices (closest to Urdu)
+            v.lang.includes("ur")
+        );
+
+        if (femaleVoices.length > 0) {
+            msg.voice = femaleVoices[0];  // pick first female voice
+        }
+
+        msg.pitch = 1.2;   // more feminine tone
+        msg.rate = 1;
+
+        speechSynthesis.speak(msg);
+    }, 3000);
+}
+
+// ====== WAIT UNTIL VOICES ARE LOADED ======
+speechSynthesis.onvoiceschanged = () => {
+    document.addEventListener("click", playWelcome);
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HEADER -->
+<header>
+  <a href="./menu.html">
+<img src="./Artboard 1.png" width="80" height="80"></a>
+  <h2>Korangi Mini Shop</h2>
+  <div class="cart-icon">
+     <!-- User Icon (White Color) -->
+    <!-- <a href="account.html" class="user-icon">👤</a> -->
+    <a href="card.html" style="color:white;text-decoration:none;">🛒</a>
+    <span class="count" id="count">0</span>
+  </div>
+</header>
+
+<!-- TOP SLIDER -->
+<div class="top-slider">
+<div class="slide active">
+  <img loading="lazy" src="./korangi mini mart 3 .png" width="1200" height="520">
+</div>
+<div class="slide">
+  <img loading="lazy" src="./korangi mini mart 2.png" width="1200" height="520">
+</div>
+<div class="slide">
+  <img loading="lazy" src="./korani mini mart 1.png" width="1200" height="520">
+</div>
+
+</div>
+<script>
+let idx=0;
+const slides=document.querySelectorAll(".top-slider .slide");
+setInterval(()=>{
+  slides.forEach(s=>s.classList.remove("active"));
+  slides[idx].classList.add("active");
+  idx=(idx+1)%slides.length;
+},3000);
+</script>
+
+<!-- CATEGORY BUTTONS -->
+<div id="categoryButtons" class="category-buttons-wrapper"></div>
+
+<!-- PRODUCTS CONTAINER -->
+<div class="container" id="container"></div>
+
+<script>
+// Categories with multiple sliders
+const categories = {
+  "Grocery Store": [
+    {
+      heading: "Butter & Milk",
+      products: [
+        {name:'Large Blue Band',price:3499,img:'blue-band-butter-medium.png',link:'blue-band-butter-medium.html'},
+        {name:'Small Blue Band',price:2199,img:'blue-band-butter-small.png', link:'blue-band-butter-small.html'},
+        {name:'Milkpack Small',price:150,img:'milk-pack-small.png', link:'milk-pack-small.html'},
+        {name:'Milkpack Large',price:250,img:'large-milkpak-box.png',link:'large-milkpak-box.html'},
+        {name:'Olper Small',price:180,img:'small-olper-milk.png',link:'small-olper-milk.html'},
+        {name:'Milkpack Creem',price:350,img:'milk-pack-cream.png' ,link:'milk-pack-cream.html'},
+        {name:'Olper Cream',price:250,img:'olper-cream-.png' ,link:'olper-cream.html'},
+        {name:'Olper Large',price:400,img:'olper-milk-large.png' ,link:'olper-milk-large.html'}
+      ]
+    },
+    {
+      heading: "Tea , Greentea & Coffee",
+      products: [
+        {name:'Greentea Apple falavour',price:299,img:'apple-green-tea.png' ,link:'apple-green-tea.html'},
+        {name:'Greentea Lemon falavour',price:299,img:'lemon-green-tea.png', link:'lemon-green-tea.html'},
+        {name:'Tea Family Mixture Small',price:499,img:'tea-box-family-mixture-small.png', link:'tea-box-family-mixture-small.html'},
+        {name:'Tea Mazban Small',price:220,img:'tea-box-mazban-small.png', link:'tea-box-mazban-small.html'},
+        {name:'Tea Danadar Small',price:399,img:'tea-pack-danay-dar-small.png', link:'tea-pack-danay-dar-small.html'},
+        {name:'Tea Danadar Big',price:650,img:'tea-pack-danedar-big.png', link:'tea-pack-danedar-big.html'},
+        {name:'Coffee glass',price:1000,img:'coffee-jar.png', link:'coffee-jar.html'},
+
+      ]
+    },
+    {
+      heading: "Jam ",
+      products: [
+        {name:'Apple Jam Small',price:250,img:'apple-jam-small.png', link:'apple-jam-small.html'},
+        {name:'Apple jam large',price:450,img:'jam-apple.png', link:'jam-apple.html'},
+        {name:'Fruit jam small',price:270,img:'mix-fruit-jam-small.png', link:'mix-fruit-jam-small.html'},
+        {name:'fruit jam large',price:480,img:'mix-fruit-jam-large.png', link:'mix-fruit-jam-large.html'},
+
+      ]
+    },
+    {
+      heading: "Dal , Rice ",
+      products: [
+        {name:'DaL Chana 1kg',price:180,img:'dal-chana.png', link:'dal-chana.html'},
+        {name:'Dal Mash 1kg',price:220,img:'dal-mash.png', link:'dal-mash.html' },
+        {name:'Dal Masoor 1kg',price:200,img:'dal-masoor.png', link:'dal-masoor.html'},
+        {name:'Dal Mong 1kg',price:210,img:'dal-moong.png', link:'dal-moong.html' },
+        {name:'Saila Rice 1kg',price:380,img:'saila-rice.png', link:'saila-rice.html' },
+      ]
+    },
+
+       {
+      heading: "Oil , Ghee ",
+      products: [
+        {name:'Dalda Oil 1liter',price:520,img:'dalda-oil-1-liter.png',link:'dalda-oil-1-liter.html'},
+        {name:'Tullo Ghee 1kg',price:680,img:'tullo-ghee-1-kg.png',link:'tullo-ghee-1-kg.html' },
+        {name:'Tullo Oil 1kg',price:480,img:'tullo-1-liter.png',link:'tullo-1-liter.html' },
+
+      ]
+    }
+    
+
+  ],
+
+  COSMETICS: [
+    {
+      heading: "Face Products",
+      products: [
+        {name:'Vince Face Wash Acne and Oil',price:499,img:'vince-face-wash-acne-and-oil.png',link:'vince-face-wash-acne-and-oil.html' },
+        {name:'Vitamin C Face Wash',price:650,img:'vitamin-c-face-wash.png' ,link:'vitamin-c-face-wash.html'},
+        {name:'Vince Hydra Face Wash',price:499,img:'vince-hydra-Face-wash.png', link:'vince-hydra-Face-wash.html' },
+        {name:'Conatural Tea Tree Neem Face Wash',price:999,img:'conatural-tea-tree-neem-face-wash.png' ,link:'conatural-tea-tree-neem-face-wash.html' },
+
+      ]
+    },
+    {
+      heading: "Shampoo & Soap",
+      products: [
+        {name:'Lifebuoy Silky Soft Shampoo 175 ml',price:399,img:'lifebuoy-silky-soft-shampoo-175-ml.png', link:'lifebuoy-silky-soft-shampoo-175-ml.html' },
+        {name:'Lifebuoy Herbal Strong Shampoo',price:420,img:'lifebuoy-herbal-strong-shampoo.png', link:'lifebuoy-herbal-strong-shampoo.html' },
+        {name:'Lifeboy Care Soap Bar',price:120,img:'lifebuoy-care-soap-bar.png', link:'lifeboy-care-soap-bar.html' },
+      ]
+    },
+   
+  ],
+
+};
+
+
+const categoryButtonsDiv = document.getElementById('categoryButtons');
+let activeCategory = 'Grocery Store';
+
+// Render category buttons
+for(let cat in categories){
+  let btn = document.createElement('button');
+  btn.className = 'category-btn'+(cat===activeCategory?' active':'');
+  btn.innerText = cat;
+  btn.onclick = ()=>{ 
+    activeCategory=cat;
+    document.querySelectorAll('.category-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCategory(cat);
+  }
+  categoryButtonsDiv.appendChild(btn);
+}
+function renderCategory(cat){
+  const container=document.getElementById("container");
+  container.innerHTML='';
+
+  categories[cat].forEach((sliderObj,index)=>{
+
+    // CREATE SLIDER SECTION WITH CUSTOM HEADING
+    let div=document.createElement("div");
+    div.className="category-section";
+    div.innerHTML=`
+      <h2 style="margin-left: 5px; margin-bottom: 10px; font-size: 20px; font-weight: 600; color: #111827;">
+        ${sliderObj.heading}  <!-- Custom heading -->
+      </h2>
+
+      <div class="product-slider-wrapper">
+        <button class="arrow-btn arrow-left" onclick='scrollSlider("${cat}-${index}",-300)'>&lt;</button>
+        <div class="product-slider" id="slider-${cat}-${index}"></div>
+        <button class="arrow-btn arrow-right" onclick='scrollSlider("${cat}-${index}",300)'>&gt;</button>
+      </div>
+    `;
+    container.appendChild(div);
+
+    // ADD PRODUCTS IN SLIDER
+    let slider = document.getElementById(`slider-${cat}-${index}`);
+    sliderObj.products.forEach(p=>{
+      let card=document.createElement("div");
+      card.className="card";
+    card.innerHTML = `
+    <a href="${p.link}" class="card-link"> <img src="${p.img}" alt="${p.name}"><h4>${p.name}</h4></a>
+    <p>Rs ${p.price}</p>
+    <button class="add-cart" 
+        onclick="addCart('${p.name}', ${p.price}, '${p.img}')">
+        Add to Cart
+    </button>`;
+      slider.appendChild(card);
+    });
+  });
+}
+
+
+
+// Scroll function
+function scrollSlider(id,amount){
+  document.getElementById(`slider-${id}`).scrollBy({left:amount,behavior:"smooth"});
+}
+
+// Cart functions
+function addCart(name,price){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let f=cart.find(i=>i.name===name);
+  if(f) f.qty++; else cart.push({name,price,qty:1});
+  localStorage.setItem("korangiCart",JSON.stringify(cart));
+  updateCount();
+}
+function updateCount(){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let total=cart.reduce((a,i)=>a+i.qty,0);
+  document.getElementById("count").innerText=total;
+}
+
+// Render default category
+renderCategory(activeCategory);
+updateCount();
+</script>
+
+<!-- DEALS -->
+<div class="deals-wrapper" id="dealsWrapper"></div>
+
+<div id="dealModal">
+  <div class="modal-box">
+    <h3 id="modalDealTitle"></h3>
+    <ul id="modalItemsList"></ul>
+    <h3 id="modalTotal"></h3>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <button style="background:#ef4444;color:white;padding:10px;border-radius:8px;width:48%;" onclick="closeDealModal()">Close</button>
+      <button style="background:#10b981;color:white;padding:10px;border-radius:8px;width:48%;" onclick="orderNowFromModal()">Order</button>
+    </div>
+  </div>
+</div>
+
+
+ <!-- <script> 
+
+const dealDefinitions={
+  "Deal 1":[{name:"Sugar",price:180},{name:"Rice",price:50},{name:"Tea",price:220}],
+  "Deal 2":[{name:"Flour 5kg",price:550},{name:"Rice 1kg",price:240},{name:"Rice 1kg",price:240}],
+  "Deal 3":[{name:"Flour 5kg",price:550},{name:"Rice 1kg",price:240}]
+};
+
+let wrapper=document.getElementById("dealsWrapper");
+for(let deal in dealDefinitions){
+  let total=dealDefinitions[deal].reduce((a,b)=>a+b.price,0);
+  let card=document.createElement("div");
+  card.className="deal-card";
+  card.innerHTML=`
+    <div class="label">DEAL</div>
+    <h3>${deal}</h3>
+    <p><b>Rs ${total}</b></p>
+    <p style="font-size:12px;color:#444;">View to see items</p>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <button class="view-btn" onclick="openDealModal('${deal}')">View</button>
+      <button class="order-btn" onclick="addDealToCart('${deal}',${total})">Add</button>
+    </div>
+  `;
+  wrapper.appendChild(card);
+}
+
+let currentDeal=null;
+function openDealModal(deal){
+  currentDeal=deal;
+  document.getElementById("modalDealTitle").innerText=deal;
+  let ul=document.getElementById("modalItemsList");
+  ul.innerHTML="";
+  let total=0;
+  dealDefinitions[deal].forEach(i=>{
+    ul.innerHTML+=`<li>${i.name} – Rs ${i.price}</li>`;
+    total+=i.price;
+  });
+  document.getElementById("modalTotal").innerText="Total: Rs "+total;
+  document.getElementById("dealModal").style.display="flex";
+}
+function closeDealModal(){document.getElementById("dealModal").style.display="none";}
+function addDealToCart(name,total){
+  let cart=JSON.parse(localStorage.getItem("korangiCart")||"[]");
+  let f=cart.find(i=>i.name===name);
+  if(f) f.qty++; else cart.push({name,price:total,qty:1});
+  localStorage.setItem("korangiCart",JSON.stringify(cart));
+  updateCount();
+}
+function orderNowFromModal(){
+  let total=dealDefinitions[currentDeal].reduce((a,b)=>a+b.price,0);
+  addDealToCart(currentDeal,total);
+  closeDealModal();
+}
+</script> -->
+
+<footer>
+<div class="container-footer">
+<div>
+<h3>Korangi Mini Mart</h3>
+<p>Your trusted local online store delivering fresh groceries, household items, cosmetics, and more—fast and affordable.</p>
+</div>
+  <!-- <div>
+    <h3>Customer Service</h3>
+    <ul>
+      <li>Help Center</li>
+      <li>Order Tracking</li>
+      <li>Returns & Refunds</li>
+      <li>Shipping Information</li>
+    </ul>
+  </div> -->
+<div>
+<h3>Any Problem</h3>
+<ul>
+<li><a href="about.html">About Us</a></li>
+<li> <a href="./contact.html">Contact</a></li>
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+
+<li>Terms & Conditions</li>
+</ul>
+</div>
+<div>
+<h3>Follow Us</h3>
+<ul>
+   <li>
+ <a 
+      href="https://www.facebook.com/sharer/sharer.php?u=https://korangiminimart.netlify.app" 
+      target="_blank">
+      Facebook share
+    </a>
+      </li>
+
+      <li>
+        <a href="https://wa.me/?text=https://korangiminimart.netlify.app" target="_blank">
+          Share on WhatsApp
+        </a>
+      </li>
+</ul>
+</div>
+</div>
+<div style="text-align:center;margin-top:30px;font-size:13px;color:#555;">
+© 2025 Korangi Mini Mart — All Rights Reserved.
+</div>
+</footer>
+<script src="importantcode.js"></script>
+
+
+</body>
+</html>
