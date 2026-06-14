@@ -254,129 +254,7 @@ footer ul{list-style:none;padding:0;line-height:26px ;color:#fafcff}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
-
-
-<!-- ================= PAYMENT MODAL ================= -->
-<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
-  <div class="bg-white p-6 rounded shadow max-w-sm w-full text-center space-y-3">
-
-    <h2 class="text-xl font-bold">Select Payment Method</h2>
-<button onclick="window.location.href='jazzcash.php'">
-    Pay with JazzCash
-</button>
-
-  </div>
-</div>
-
 <script>
-
-let selectedPayment = "";
-
-/* OPEN PAYMENT MODAL ON ORDER CLICK */
-document.getElementById('orderBtn').addEventListener('click', ()=>{
-
-  if(cart.length===0){ showModal("Ap Nay Kuch Nahi Liya !"); return; }
-
-  const nameField=document.getElementById("name");
-  const emailField=document.getElementById("email");
-  const whatsappField=document.getElementById("whatsapp");
-  const addressField=document.getElementById("address");
-  const locationField=document.getElementById("location");
-
-  [nameField,emailField,whatsappField,addressField,locationField].forEach(f=>f.style.borderColor="#d1d5db");
-
-  if(!nameField.value.trim()){ nameField.style.borderColor="red"; showModal("Please enter your name"); return; }
-  if(!/^[^@]+@gmail\.com$/.test(emailField.value.trim())){ emailField.style.borderColor="red"; showModal("Please enter valid Gmail"); return; }
-  if(!/^03\d{9}$/.test(whatsappField.value.trim())){ whatsappField.style.borderColor="red"; showModal("Valid WhatsApp number required"); return; }
-  if(!addressField.value.trim()){ addressField.style.borderColor="red"; showModal("Please enter address"); return; }
-
-  if(!locationField.value.trim()){
-    showModal("Please allow location first");
-    return;
-  }
-
-  // open payment modal instead of direct submit
-  document.getElementById("paymentModal").classList.remove("hidden");
-  document.getElementById("paymentModal").classList.add("flex");
-
-});
-
-/* CLOSE MODAL */
-function closePaymentModal(){
-  document.getElementById("paymentModal").classList.add("hidden");
-  document.getElementById("paymentModal").classList.remove("flex");
-}
-
-/* PAYMENT SELECT */
-function selectPayment(type){
-  selectedPayment = type;
-  closePaymentModal();
-
-  processOrder();
-}
-
-
-
-function processOrder(){
-
-  let paymentInput = document.createElement("input");
-  paymentInput.type = "hidden";
-  paymentInput.name = "payment_method";
-  paymentInput.value = selectedPayment;
-
-  document.getElementById("checkoutForm").appendChild(paymentInput);
-
-  Swal.fire({
-    icon: "success",
-    title: "Your Order Is Successfully Submitted",
-    text: "Payment Method: " + selectedPayment,
-    confirmButtonText: "OK"
-  }).then(() => {
-
-      document.getElementById("checkoutForm").submit();
-
-      localStorage.removeItem("korangiCart");
-      cart = [];
-      updateCartUI();
-
-  });
-}
-/* FINAL ORDER SUBMIT */
-// function processOrder(){
-
-//   // payment store in form (optional)
-//   let paymentInput = document.createElement("input");
-//   paymentInput.type = "hidden";
-//   paymentInput.name = "payment_method";
-//   paymentInput.value = selectedPayment;
-//   document.getElementById("checkoutForm").appendChild(paymentInput);
-
-//   document.getElementById("checkoutForm").submit();
-
-//   localStorage.removeItem("korangiCart");
-//   cart=[];
-//   updateCartUI();
-
-//   Swal.fire("🎉 Order Placed Successfully (" + selectedPayment + ")");
-// }
-
-</script>
-
-
-
-
-
-
-<script>
-
-
-
-
-
-
-
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -535,11 +413,11 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
     return; 
   }
 
-  // document.getElementById("checkoutForm").submit();
-  // localStorage.removeItem("korangiCart");
-  // cart=[];
-  // updateCartUI();
-  // Swal.fire("🎉 Order Sent Successfully! YOU WILL RECEIVE IN 24 HOURS");
+  document.getElementById("checkoutForm").submit();
+  localStorage.removeItem("korangiCart");
+  cart=[];
+  updateCartUI();
+  Swal.fire("🎉 Order Sent Successfully! YOU WILL RECEIVE IN 24 HOURS");
 
 });
 </script>
