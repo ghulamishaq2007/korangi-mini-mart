@@ -4,15 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Korangi Mini Mart - Fast Local Delivery </title>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WF344KQQBN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-WF344KQQBN');
-</script>
 <meta name="description" content="Korangi Mini Mart - Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
 <meta name="keywords" content="Korangi Mini Mart, Korangi grocery delivery, Korangi snacks online, Korangi cosmetics, Korangi kitchen items, online grocery Karachi, fast delivery Korangi, local mini mart, Korangi shopping, buy groceries online Korangi, Korangi online store, Korangi mini shop, same day delivery Korangi, Korangi food delivery, Karachi mini mart, Korangi local delivery, Korangi household items, Korangi essentials, Korangi shopping online, online mart Korangi">
 <link rel="icon" href="./Artboard 1.png" type="image/png">
@@ -32,19 +23,13 @@
 <meta name="twitter:description" content="Fast local delivery of items in Korangi, Karachi. Order online and get your essentials within 24 hours.">
 <meta name="twitter:image" content="https://korangiminimart.com/images/social-preview.png">
 <meta name="twitter:site" content="@KorangiMiniMart">
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WDKMRQDD');</script>
-<!-- End Google Tag Manager -->
 
-<script>
+
+<!--  <script>
   if (!localStorage.getItem("loggedIn")) {
-      window.location.href = "index.html"; 
+      window.location.href = "menu.html"; 
   }
-</script>
+</script> --> 
 
 <meta name="title" content="Korangi Mini Shop - Local Delivery">
 <meta name="description" content="Online grocery, snacks, cosmetics, and kitchen items with fast local delivery in Korangi.">
@@ -134,8 +119,8 @@ footer ul{list-style:none;padding:0;line-height:26px ;color:#fafcff}
       <p>Your order will be received in 24 hours. Please wait; I will contact on WhatsApp. Write your WhatsApp number, not call number.</p>
     </div>
     <div class="arrange1">
-      <h2 class="text-2xl font-bold mb-3">Select 5 items</h2> 
-      <p>If you have not selected at least 5 items, your order cannot be processed. Please select 5 items.</p>
+      <h2 class="text-2xl font-bold mb-3">Select 7 items</h2> 
+      <p>If you have not selected at least 7 items, your order cannot be processed. Please select 7 items.</p>
     </div>
   </div>
 
@@ -269,7 +254,129 @@ footer ul{list-style:none;padding:0;line-height:26px ;color:#fafcff}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+
+
+<!-- ================= PAYMENT MODAL ================= -->
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50">
+  <div class="bg-white p-6 rounded shadow max-w-sm w-full text-center space-y-3">
+
+    <h2 class="text-xl font-bold">Select Payment Method</h2>
+<button onclick="window.location.href='jazzcash.php'">
+    Pay with JazzCash
+</button>
+
+  </div>
+</div>
+
 <script>
+
+let selectedPayment = "";
+
+/* OPEN PAYMENT MODAL ON ORDER CLICK */
+document.getElementById('orderBtn').addEventListener('click', ()=>{
+
+  if(cart.length===0){ showModal("Ap Nay Kuch Nahi Liya !"); return; }
+
+  const nameField=document.getElementById("name");
+  const emailField=document.getElementById("email");
+  const whatsappField=document.getElementById("whatsapp");
+  const addressField=document.getElementById("address");
+  const locationField=document.getElementById("location");
+
+  [nameField,emailField,whatsappField,addressField,locationField].forEach(f=>f.style.borderColor="#d1d5db");
+
+  if(!nameField.value.trim()){ nameField.style.borderColor="red"; showModal("Please enter your name"); return; }
+  if(!/^[^@]+@gmail\.com$/.test(emailField.value.trim())){ emailField.style.borderColor="red"; showModal("Please enter valid Gmail"); return; }
+  if(!/^03\d{9}$/.test(whatsappField.value.trim())){ whatsappField.style.borderColor="red"; showModal("Valid WhatsApp number required"); return; }
+  if(!addressField.value.trim()){ addressField.style.borderColor="red"; showModal("Please enter address"); return; }
+
+  if(!locationField.value.trim()){
+    showModal("Please allow location first");
+    return;
+  }
+
+  // open payment modal instead of direct submit
+  document.getElementById("paymentModal").classList.remove("hidden");
+  document.getElementById("paymentModal").classList.add("flex");
+
+});
+
+/* CLOSE MODAL */
+function closePaymentModal(){
+  document.getElementById("paymentModal").classList.add("hidden");
+  document.getElementById("paymentModal").classList.remove("flex");
+}
+
+/* PAYMENT SELECT */
+function selectPayment(type){
+  selectedPayment = type;
+  closePaymentModal();
+
+  processOrder();
+}
+
+
+
+function processOrder(){
+
+  let paymentInput = document.createElement("input");
+  paymentInput.type = "hidden";
+  paymentInput.name = "payment_method";
+  paymentInput.value = selectedPayment;
+
+  document.getElementById("checkoutForm").appendChild(paymentInput);
+
+  Swal.fire({
+    icon: "success",
+    title: "Your Order Is Successfully Submitted",
+    text: "Payment Method: " + selectedPayment,
+    confirmButtonText: "OK"
+  }).then(() => {
+
+      document.getElementById("checkoutForm").submit();
+
+      localStorage.removeItem("korangiCart");
+      cart = [];
+      updateCartUI();
+
+  });
+}
+/* FINAL ORDER SUBMIT */
+// function processOrder(){
+
+//   // payment store in form (optional)
+//   let paymentInput = document.createElement("input");
+//   paymentInput.type = "hidden";
+//   paymentInput.name = "payment_method";
+//   paymentInput.value = selectedPayment;
+//   document.getElementById("checkoutForm").appendChild(paymentInput);
+
+//   document.getElementById("checkoutForm").submit();
+
+//   localStorage.removeItem("korangiCart");
+//   cart=[];
+//   updateCartUI();
+
+//   Swal.fire("🎉 Order Placed Successfully (" + selectedPayment + ")");
+// }
+
+</script>
+
+
+
+
+
+
+<script>
+
+
+
+
+
+
+
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -424,15 +531,15 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
   const totalNormalQty = normalItems.reduce((sum,i)=>sum+i.qty,0);
 
   if(dealItems.length===0 && totalNormalQty<7){ 
-    showModal("Please select at least 7 items in total."); 
+    showModal("Please select at least 7 items in total or at least one deal."); 
     return; 
   }
 
-  document.getElementById("checkoutForm").submit();
-  localStorage.removeItem("korangiCart");
-  cart=[];
-  updateCartUI();
-  Swal.fire("🎉 Order Sent Successfully! YOU WILL RECEIVE IN 24 HOURS");
+  // document.getElementById("checkoutForm").submit();
+  // localStorage.removeItem("korangiCart");
+  // cart=[];
+  // updateCartUI();
+  // Swal.fire("🎉 Order Sent Successfully! YOU WILL RECEIVE IN 24 HOURS");
 
 });
 </script>
@@ -443,6 +550,3 @@ document.getElementById('orderBtn').addEventListener('click', ()=>{
 
 </body>
 </html>
-
-
-
